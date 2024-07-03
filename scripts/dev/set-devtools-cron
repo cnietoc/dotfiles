@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+source "$DOTLY_PATH/scripts/core/_main.sh"
+
+##? Add devtools update to crontab
+##?
+##? Usage:
+##?    set-devtools-cron-cron
+docs::parse "$@"
+
+DEVTOOLS_BIN_PATH="/Users/cx02243/Projects/Telefonica/devtools/bin"
+PULL_COMMAND="$DEVTOOLS_BIN_PATH/update-devtools"
+
+function checkCronInstalled() {
+    crontab -l | grep -q "$PULL_COMMAND"
+}
+
+# Add auto-updating cron
+if ! checkCronInstalled; then
+    echo "Adding auto-pull to user's crontab"
+
+    CRON_LINE="15 * * * * $PULL_COMMAND"
+    (crontab -l; echo "$CRON_LINE") | crontab -
+
+    if ! checkCronInstalled; then
+        echo "There was an error installing the cron. Please check that you have crontab installed." \
+             "If you can't find what's wrong, please ask $RESPONSIBLE_TEAM team for help."
+    else
+        echo "Auto-pull cron installed correctly"
+    fi
+else
+    echo "Your crontab already includes the auto-pull command, no change is needed."
+fi

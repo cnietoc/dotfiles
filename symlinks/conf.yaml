@@ -12,8 +12,12 @@
 - link:
     ~/.bash_profile: shell/bash/.bash_profile
     ~/.bashrc: shell/bash/.bashrc
+    ~/.profile: shell/bash/.profile
     ~/.zimrc: shell/zsh/.zimrc
     ~/.zlogin: shell/zsh/.zlogin
     ~/.zshenv: shell/zsh/.zshenv
     ~/.zshrc: shell/zsh/.zshrc
+    ~/.zprofile: shell/zsh/.zprofile
     ~/.inputrc: shell/.inputrc
+    ~/.gitconfig: git/.gitconfig
+    ~/.gitignore_global: git/.gitignore_global

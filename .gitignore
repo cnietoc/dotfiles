@@ -1,1 +1,8 @@
-/.idea/
+.idea
+.DS_Store
+/**/**/private-*
+
+# ZSH
+shell/zsh/.zim
+shell/zsh/**/**.zwc
+shell/zsh/**/**.zwc.old

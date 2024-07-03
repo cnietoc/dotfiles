@@ -28,3 +28,9 @@ alias i.='(idea $PWD &>/dev/null &)'
 alias c.='(code $PWD &>/dev/null &)'
 alias o.='open .'
 alias up='dot package update_all'
+
+# Python
+alias python="python3"
+
+# Telefonica
+alias devtools='if [[ ":$PATH:" != *":$DEVTOOLS_PATH/bin:"* ]]; then export PATH="$DEVTOOLS_PATH/bin:$PATH"; echo "Enabled devtools"; else export PATH=$(echo "$PATH" | tr ":" "\n" | grep -v "$DEVTOOLS_PATH/bin" | tr "\n" ":"); PATH=${PATH%:}; echo "Disabled devtools"; fi'

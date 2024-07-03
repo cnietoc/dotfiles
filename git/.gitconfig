@@ -1,0 +1,10 @@
+[user]
+	email = carlos.nietodelacuesta@telefonica.com
+	name = Carlos Nieto
+[credential]
+        helper = cache --timeout 604800
+[alias]
+	st = status
+	c = !git add -A && git commit
+[core]
+	excludefile = /Users/mbertamini/.gitignore_global
