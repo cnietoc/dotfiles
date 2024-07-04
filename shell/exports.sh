@@ -1,10 +1,20 @@
 # ------------------------------------------------------------------------------
 # Codely theme config
 # ------------------------------------------------------------------------------
-#export CODELY_THEME_MINIMAL=false
-#export CODELY_THEME_MODE="dark"
-#export CODELY_THEME_PROMPT_IN_NEW_LINE=false
-#export CODELY_THEME_PWD_MODE="short" # full, short, home_relative
+export CODELY_THEME_MODE="dark"
+export CODELY_THEME_PWD_MODE="home_relative"    # full, short, home_relative
+export CODELY_THEME_STATUS_ICON_OK="➤"  #  ﭧ ﯓ ﬦ          
+export CODELY_THEME_STATUS_ICON_KO="✖"  # ﮊ
+export CODELY_THEME_PROMPT_IN_NEW_LINE=true
+
+if [[ $__CFBundleIdentifier == "com.jetbrains."* ]]; then
+  export CODELY_THEME_MINIMAL=false
+fi
+
+if [[ $__CFBundleIdentifier == "com.microsoft."* ]]; then
+  export CODELY_THEME_MINIMAL=true
+  export CODELY_THEME_MODE=light
+fi
 
 # ------------------------------------------------------------------------------
 # Languages
@@ -27,9 +37,13 @@ export FZF_DEFAULT_OPTS="--color=$fzf_colors --reverse"
 export DOCKER_SOCK_FILE=/var/run/docker.sock
 
 # Homebrew
+export HOMEBREW_AUTO_UPDATE_SECS=604800 # 1 week
 if [ -f "/opt/homebrew/bin/brew" ]; then
   eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
+
+# Default lang
+export LANG="es_ES.UTF-8"
 
 # ------------------------------------------------------------------------------
 # Telefonica tooling

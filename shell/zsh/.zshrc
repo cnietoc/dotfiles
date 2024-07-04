@@ -1,13 +1,25 @@
 #!/usr/bin/env zsh
 # Uncomment for debuf with `zprof`
-zmodload zsh/zprof
+# zmodload zsh/zprof
 
 # ZSH Ops
+# History
 setopt HIST_IGNORE_ALL_DUPS
+setopt HIST_SAVE_NO_DUPS
+setopt HIST_REDUCE_BLANKS
+setopt INC_APPEND_HISTORY_TIME
+setopt EXTENDED_HISTORY
 setopt HIST_FCNTL_LOCK
-# setopt SOURCE_TRACE
+
 setopt +o nomatch
 # setopt autopushd
+
+# ZSH style
+if [[ -z $TMUX ]]; then
+  zstyle ':fzf-tab:complete:cd:*' fzf-preview 'exa -1 --color=always $realpath'
+else
+  zstyle ':fzf-tab:*' fzf-command ftb-tmux-popup
+fi;
 
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)
 
