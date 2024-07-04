@@ -49,6 +49,12 @@ export LANG="es_ES.UTF-8"
 # Telefonica tooling
 # ------------------------------------------------------------------------------
 export DEVTOOLS_PATH="$HOME/Projects/Telefonica/devtools"
+export TELEFONICA_CONFIG_PATH="$HOME/Library/CloudStorage/OneDrive-Telefonica/config"
+
+# ------------------------------------------------------------------------------
+# Scripts environment variables
+# ------------------------------------------------------------------------------
+export AZURE_CONTEXTS="$TELEFONICA_CONFIG_PATH/azure-k8s-contexts"
 
 # ------------------------------------------------------------------------------
 # Path - The higher it is, the more priority it has

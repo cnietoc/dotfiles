@@ -34,6 +34,9 @@ source "$DOTFILES_PATH/shell/init.sh"
 
 fpath=("$DOTFILES_PATH/shell/zsh/themes" "$DOTFILES_PATH/shell/zsh/completions" "$DOTLY_PATH/shell/zsh/themes" "$DOTLY_PATH/shell/zsh/completions" "$HOMEBREW_PREFIX/share/zsh/site-functions" $fpath)
 
+# Kubectl completions
+source <(kubectl completion zsh)
+
 autoload -Uz promptinit && promptinit
 prompt ${DOTLY_THEME:-codely}
 

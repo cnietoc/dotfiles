@@ -1,0 +1,61 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+source "$DOTLY_PATH/scripts/core/_main.sh"
+
+##? Configure on k8s context from azure (Require a file with the configuration on \$AZURE_CONTEXTS)
+##?
+##? The file defined on \$AZURE_CONTEXTS should have the following format:
+##? -------------------------------------------------------------------------------------
+##? # context_name tenant_id subscription_id resource_group cluster_name namespace
+##? context1 tenant_id1 subscription_id1 resource_group1 cluster_name1 namespace1
+##? context2 tenant_id2 subscription_id2 resource_group2 cluster_name2 namespace2
+##? context3 tenant_id3 subscription_id3 resource_group3 cluster_name3 namespace3
+##? -------------------------------------------------------------------------------------
+##?
+##? Usage:
+##?     set-azure-k8s-contexts
+docs::parse "$@"
+
+if [[ -z "$AZURE_CONTEXTS" ]]; then
+  echo "The variable AZURE_CONTEXTS is not defined. Please define it in your .zshrc or .bashrc file."
+  exit 1
+fi
+
+if [[ ! -f $AZURE_CONTEXTS ]]; then
+  echo "$AZURE_CONTEXTS is missing. Please create the file with the required configuration."
+  exit 1
+fi
+
+while IFS= read -r line; do
+  if [[ -z $line || "$line" =~ ^# ]]; then
+    continue
+  fi
+
+  IFS=' ' read -r -a context <<< "$line"
+  if [[ ${#context[@]} -ne 6 ]]; then
+    echo "Invalid configuration in $AZURE_CONTEXTS. Please check the file."
+    exit 1
+  fi
+
+  context_name=${context[0]}
+  tenant_id=${context[1]}
+  subscription_id=${context[2]}
+  resource_group=${context[3]}
+  cluster_name=${context[4]}
+  namespace=${context[5]}
+
+  echo "Configuring context $context_name"
+
+  current_tenant=$(az account show --query 'tenantId' -o tsv)
+
+  if [[ "$current_tenant" == "$tenant_id" ]]; then
+    echo "Already authenticated in Azure with the tenant $tenant_id. Skipping..."
+  else
+    az login --tenant $tenant_id
+  fi
+
+  az aks get-credentials --resource-group $resource_group --name $cluster_name --subscription $subscription_id --context $context_name --overwrite-existing
+  kubectl config set-context $context_name --namespace=$namespace
+done < $AZURE_CONTEXTS
