@@ -16,7 +16,7 @@ setopt +o nomatch
 
 # ZSH style
 if [[ -z $TMUX ]]; then
-  zstyle ':fzf-tab:complete:cd:*' fzf-preview 'exa -1 --color=always $realpath'
+  zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always $realpath'
 else
   zstyle ':fzf-tab:*' fzf-command ftb-tmux-popup
 fi;
