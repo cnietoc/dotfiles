@@ -1,6 +1,9 @@
-export DOTFILES_PATH="/Users/cx02243/.dotfiles"
+export DOTFILES_PATH="$HOME/.dotfiles"
 export DOTLY_PATH="$DOTFILES_PATH/modules/dotly"
 export DOTLY_THEME="codely"
+export CODELY_THEME_MODE="dark"
+
+export path=""
 
 source "$DOTFILES_PATH/shell/init.sh"
 

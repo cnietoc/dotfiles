@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+source "$DOTLY_PATH/scripts/core/_main.sh"
+
+##? get the wifi ip and copy into clipboard
+##?
+##? Usage:
+##?    wifi_ip
+docs::parse "$@"
+
+ifconfig en0 | grep -i "^\s*inet[^6]" | awk '{ print $2 }'
