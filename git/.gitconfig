@@ -8,3 +8,5 @@
 	c = !git add -A && git commit
 [core]
 	excludefile = /Users/mbertamini/.gitignore_global
+[init]
+	defaultBranch = main
