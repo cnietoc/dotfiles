@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+source "$DOTLY_PATH/scripts/core/_main.sh"
+
+##? Show the name of the command running on each port on MacOS
+##? (Credits to https://x.com/seldo/status/1823126087423099192)
+#?? 1.0.0
+##?
+##? Usage:
+##?   port_command
+docs::parse "$@"
+
+sudo lsof -iTCP -sTCP:LISTEN -n -P | awk 'NR>1 {print $9, $1, $2}' | sed 's/.*://' | sort -nu | while read port process pid; do echo "Port $port: $(ps -p $pid -o command= | sed 's/^-//') (PID: $pid)"; done
