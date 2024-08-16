@@ -10,6 +10,7 @@
 
 - link:
     ~/.dotly: os/mac/.dotly
+    modules/private: ~/Library/CloudStorage/OneDrive-Personal/dotfiles
     ~/bin/bash: /opt/homebrew/bin/bash
     ~/bin/date: /opt/homebrew/bin/gdate
     ~/bin/find: /opt/homebrew/bin/gfind

@@ -1,0 +1,121 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+source "$DOTLY_PATH/scripts/core/_main.sh"
+
+##? Sync playlists from Spotify on OneDrive
+#?? 1.0.0
+##?
+##? Usage:
+##?   sync_playlists
+##?   sync_playlists -d
+##?
+##? Options:
+##?   -d --default   Uses default client id and secret
+docs::parse "$@"
+
+spotify_sync_folder="$ONE_DRIVE_PERSONAL/Música/Spotify"
+
+declare -A playlists=(
+    ["La Mazdalista"]="https://open.spotify.com/playlist/2sDXWUw7DYIATBu8wIlkOB?si=9178b8524de64394"
+    ["Hits Alegres"]="https://open.spotify.com/playlist/37i9dQZF1DX9Dh2wgiAwVX?si=1536b060780e424c"
+    ["Bizarap Music sessions"]="https://open.spotify.com/playlist/11fypya0syQ1udTkWSmrBW?si=dcca5d12f10a4a44"
+    ["This is Marea"]="https://open.spotify.com/playlist/37i9dQZF1DZ06evO3kudIa?si=b35e3b4dd7ea4e6a"
+    ["This is Little Big"]="https://open.spotify.com/playlist/37i9dQZF1DZ06evO0aNkxn?si=35bdab5ba95e44c0"
+    ["This is La Oreja de Van Gogh"]="https://open.spotify.com/playlist/37i9dQZF1DZ06evO2SvOcE?si=1e352de5ecd545ac"
+    ["On the road (Richi)"]="https://open.spotify.com/playlist/4I6nNIFwfWsCAhE71SYqIj?si=b45aa0ad77b240be"
+    ["Los 2020 de España"]="https://open.spotify.com/playlist/2ErDoKVlOJMP5xKxyKmD6U?si=0ae5c919bfd24be2"
+)
+
+declare -a playlist_names=("Todas" "${!playlists[@]}")
+
+selected_names=$(printf "%s\n" "${playlist_names[@]}" | fzf --multi --prompt="Selecciona playlists: " --header="Usa TAB para seleccionar, ENTER para confirmar")
+
+if [[ -z "$selected_names" ]]; then
+    echo "No se ha seleccionado ninguna playlist"
+    exit 0
+fi
+
+IFS=$'\n' selected_names_array=($selected_names)
+
+if [[ "${selected_names_array[*]}" =~ "Todas" ]]; then
+    selected_names_array=("${!playlists[@]}")
+fi
+
+echo "Sincronizando las playlists:"
+spotify_playlists=()
+for name in "${selected_names_array[@]}"; do
+    if [[ -n "${playlists[$name]}" ]]; then
+        echo "  - $name (${playlists[$name]})"
+        spotify_playlists+=("${playlists[$name]}")
+    fi
+done
+
+# If spotdl is not installed, install it
+if ! command -v spotdl &> /dev/null; then
+  echo "spotdl is not installed. Installing it..."
+  pipx install spotdl
+fi
+
+# Spotdl requires a Spotify API key to work
+if [ -z "$SPOTIFY_CLIENT_ID" ] || [ -z "$SPOTIFY_CLIENT_SECRET" ]; then
+  echo "SPOTIFY_CLIENT_ID and SPOTIFY_CLIENT_SECRET must be set in your environment variables"
+  exit 1
+fi
+
+access_token=$(curl -s -X POST "https://accounts.spotify.com/api/token" \
+  -H "Authorization: Basic $(echo -n "$SPOTIFY_CLIENT_ID:$SPOTIFY_CLIENT_SECRET" | base64)" \
+  -d grant_type=client_credentials | jq -r '.access_token')
+
+if ! $default; then
+  client_params="--client-id $SPOTIFY_CLIENT_ID --client-secret $SPOTIFY_CLIENT_SECRET"
+else
+  echo "Using default client id and secret"
+  client_params=""
+fi
+
+rm -rf ~/.spotdl
+
+if [ ! -d "$spotify_sync_folder/.spotdl" ]; then
+  mkdir -p "$spotify_sync_folder/.spotdl"
+fi
+
+count=0
+for playlist_url in "${spotify_playlists[@]}"; do
+  count=$((count+1))
+  playlist_id=$(echo "$playlist_url" | awk -F[/:] '{print $6}')
+  response=$(curl -s -X GET "https://api.spotify.com/v1/playlists/$playlist_id" \
+        -H "Authorization: Bearer $access_token")
+
+  playlist_name=$(echo "$response" | jq -r '.name')
+  playlist_author=$(echo "$response" | jq -r '.owner.display_name')
+
+  playlist_info=$(echo "$playlist_name ($playlist_author)" | tr -d '[:cntrl:]\/:*?"<>|' | sed 's/  */ /g' | sed 's/^[ \t]*//;s/[ \t]*$//')
+
+  echo "Syncing $playlist_info ($count / ${#spotify_playlists[@]}) playlist into $spotify_sync_folder"
+
+  if [ ! -d "$spotify_sync_folder/$playlist_info" ]; then
+    mkdir -p "$spotify_sync_folder/$playlist_info"
+  fi
+
+  if [ ! -f "$spotify_sync_folder/.spotdl/$playlist_info.spotdl" ]; then
+    sync_command="--save-file '.spotdl/$playlist_info.spotdl' sync $playlist_url"
+  else
+    sync_command="sync '.spotdl/$playlist_info.spotdl'"
+  fi
+
+
+  # if [ ! -f "$spotify_sync_folder/.spotdl/$playlist_info.spotdl" ]; then
+  #  (cd "$spotify_sync_folder" && spotdl --user-auth $client_params --max-retries 25 --print-errors --m3u "$playlist_info.m3u8" --save-file ".spotdl/$playlist_info.spotdl" --output "$playlist_info/{artists} - {title}.{output-ext}" sync "$playlist_url")
+  # else
+  #  (cd "$spotify_sync_folder" && spotdl --user-auth $client_params --max-retries 25 --print-errors --m3u "$playlist_info.m3u8" --output "$playlist_info/{artists} - {title}.{output-ext}" sync ".spotdl/$playlist_info.spotdl")
+  # fi
+  #  (cd "$spotify_sync_folder" && spotdl --overwrite metadata --print-errors --m3u "$playlist_info.m3u8" --save-file ".spotdl/$playlist_info.spotdl" --output "$playlist_info/{artists} - {title}.{output-ext}" sync "$playlist_url")
+  # --client-id "$SPOTIFY_CLIENT_ID" --client-secret "$SPOTIFY_CLIENT_SECRET"
+  command_to_execute="spotdl --overwrite metadata --scan-for-songs --generate-lrc --user-auth $client_params --max-retries 25 --print-errors --m3u \"$playlist_info.m3u8\" --output \"$playlist_info/{artists} - {title}.{output-ext}\" $sync_command"
+
+  # echo "$command_to_execute"
+  # (cd "$spotify_sync_folder" && spotdl --overwrite metadata --scan-for-songs --generate-lrc --user-auth $client_params --max-retries 25 --print-errors --m3u "$playlist_info.m3u8" --output "$playlist_info/{artists} - {title}.{output-ext}" $sync_command)
+  (cd "$spotify_sync_folder" && sh -c "$command_to_execute")
+done

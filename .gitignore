@@ -1,6 +1,7 @@
 .idea
 .DS_Store
 /**/**/private-*
+/modules/private
 
 # ZSH
 shell/zsh/.zim

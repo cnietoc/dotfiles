@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+source "$DOTLY_PATH/scripts/core/_main.sh"
+
+##? Sync playlists from Spotify on OneDrive
+#?? 1.0.0
+##?
+##? Usage:
+##?   sync_playlists
+docs::parse "$@"
+
+# If spotdl is not installed, install it
+if ! command -v spotdl &> /dev/null; then
+  echo "spotdl is not installed. Installing it..."
+  pipx install spotdl
+fi
+
+# Spotdl requires a Spotify API key to work
+if [ -z "$SPOTIFY_CLIENT_ID" ] || [ -z "$SPOTIFY_CLIENT_SECRET" ]; then
+  echo "SPOTIFY_CLIENT_ID and SPOTIFY_CLIENT_SECRET must be set in your environment variables"
+  exit 1
+fi
+
+access_token=$(curl -s -X POST "https://accounts.spotify.com/api/token" \
+  -H "Authorization: Basic $(echo -n "$SPOTIFY_CLIENT_ID:$SPOTIFY_CLIENT_SECRET" | base64)" \
+  -d grant_type=client_credentials | jq -r '.access_token')
+
+get_playlist_info() {
+    playlist_id=$1
+    response=$(curl -s -X GET "https://api.spotify.com/v1/playlists/$playlist_id" \
+      -H "Authorization: Bearer $access_token")
+
+    playlist_name=$(echo "$response" | jq -r '.name')
+    playlist_author=$(echo "$response" | jq -r '.owner.display_name')
+
+    echo "$playlist_name ($playlist_author)"
+}
+
+mkdir -p "$ONE_DRIVE_PERSONAL/Música/Spotify"
+(cd "$ONE_DRIVE_PERSONAL/Música/Spotify" && spotdl --user-auth --log-level DEBUG --save-file all-user-saved-albums.spotdl sync all-user-saved-albums)

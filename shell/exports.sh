@@ -46,10 +46,16 @@ fi
 export LANG="es_ES.UTF-8"
 
 # ------------------------------------------------------------------------------
+# OneDrive
+# ------------------------------------------------------------------------------
+export ONE_DRIVE_TELEFONICA="$HOME/Library/CloudStorage/OneDrive-Telefonica"
+export ONE_DRIVE_PERSONAL="$HOME/Library/CloudStorage/OneDrive-Personal"
+
+# ------------------------------------------------------------------------------
 # Telefonica tooling
 # ------------------------------------------------------------------------------
 export DEVTOOLS_PATH="$HOME/Projects/Telefonica/devtools"
-export TELEFONICA_CONFIG_PATH="$HOME/Library/CloudStorage/OneDrive-Telefonica/config"
+export TELEFONICA_CONFIG_PATH="$ONE_DRIVE_TELEFONICA/config"
 
 # ------------------------------------------------------------------------------
 # Scripts environment variables
