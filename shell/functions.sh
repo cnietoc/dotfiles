@@ -39,3 +39,7 @@ function bwu() {
     esac
     bw sync
 }
+
+bitrate () {
+    echo `basename "$1"`: `file "$1" | sed 's/.*, \(.*\)kbps.*/\1/' | tr -d " " ` kbps
+}

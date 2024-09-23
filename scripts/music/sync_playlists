@@ -52,6 +52,9 @@ for name in "${selected_names_array[@]}"; do
     fi
 done
 
+echo "Incrementando el límite de archivos abiertos..."
+ulimit -S -n 2048
+
 # If spotdl is not installed, install it
 if ! command -v spotdl &> /dev/null; then
   echo "spotdl is not installed. Installing it..."
@@ -77,6 +80,9 @@ fi
 
 rm -rf ~/.spotdl
 
+echo "Obteniendo cookies de Brave para Spotdl..."
+yt-dlp --cookies-from-browser brave --cookies ~/.spotdl/braveCookies > /dev/null 2>&1 || true
+
 if [ ! -d "$spotify_sync_folder/.spotdl" ]; then
   mkdir -p "$spotify_sync_folder/.spotdl"
 fi
@@ -100,11 +106,10 @@ for playlist_url in "${spotify_playlists[@]}"; do
   fi
 
   if [ ! -f "$spotify_sync_folder/.spotdl/$playlist_info.spotdl" ]; then
-    sync_command="--save-file '.spotdl/$playlist_info.spotdl' sync $playlist_url"
+    sync_command="--save-file '../.spotdl/$playlist_info.spotdl' sync $playlist_url"
   else
-    sync_command="sync '.spotdl/$playlist_info.spotdl'"
+    sync_command="sync '../.spotdl/$playlist_info.spotdl'"
   fi
-
 
   # if [ ! -f "$spotify_sync_folder/.spotdl/$playlist_info.spotdl" ]; then
   #  (cd "$spotify_sync_folder" && spotdl --user-auth $client_params --max-retries 25 --print-errors --m3u "$playlist_info.m3u8" --save-file ".spotdl/$playlist_info.spotdl" --output "$playlist_info/{artists} - {title}.{output-ext}" sync "$playlist_url")
@@ -113,9 +118,8 @@ for playlist_url in "${spotify_playlists[@]}"; do
   # fi
   #  (cd "$spotify_sync_folder" && spotdl --overwrite metadata --print-errors --m3u "$playlist_info.m3u8" --save-file ".spotdl/$playlist_info.spotdl" --output "$playlist_info/{artists} - {title}.{output-ext}" sync "$playlist_url")
   # --client-id "$SPOTIFY_CLIENT_ID" --client-secret "$SPOTIFY_CLIENT_SECRET"
-  command_to_execute="spotdl --overwrite metadata --scan-for-songs --generate-lrc --user-auth $client_params --max-retries 25 --print-errors --m3u \"$playlist_info.m3u8\" --output \"$playlist_info/{artists} - {title}.{output-ext}\" $sync_command"
+  command_to_execute="spotdl --overwrite metadata --scan-for-songs --user-auth $client_params --max-retries 25 --print-errors --m3u \"$playlist_info.m3u\" --cookie-file '~/.spotdl/braveCookies' --restrict strict --bitrate auto $sync_command"
 
   # echo "$command_to_execute"
-  # (cd "$spotify_sync_folder" && spotdl --overwrite metadata --scan-for-songs --generate-lrc --user-auth $client_params --max-retries 25 --print-errors --m3u "$playlist_info.m3u8" --output "$playlist_info/{artists} - {title}.{output-ext}" $sync_command)
-  (cd "$spotify_sync_folder" && sh -c "$command_to_execute")
+  (cd "$spotify_sync_folder/$playlist_info" && sh -c "$command_to_execute")
 done
