@@ -1,0 +1,74 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+source "$DOTLY_PATH/scripts/core/_main.sh"
+
+##? Monitor disk space usage in real-time
+#?? 1.0.0
+##?
+##? Usage:
+##?   disk_space
+docs::parse "$@"
+
+# Configuración inicial
+disk="/"                 # Disco a monitorear
+interval=30              # Intervalo en segundos entre mediciones
+log_file="$HOME/disk_log.txt"  # Archivo de log (usa $HOME en lugar de ~)
+max_bar_length=50        # Número máximo de caracteres en la barra
+
+# Función para obtener el tamaño total del disco (en GB)
+get_total_space() {
+  df -g "$disk" | awk 'NR==2 {print $2}' | sed 's/[^0-9.]//g'  # Asegurar solo números
+}
+
+# Función para obtener espacio libre en disco (en GB)
+get_free_space() {
+  df -g "$disk" | awk 'NR==2 {print $4}' | sed 's/[^0-9.]//g'  # Asegurar solo números
+}
+
+# Obtener el tamaño total del disco
+total_space=$(get_total_space)
+if [[ -z "$total_space" ]]; then
+  echo "Error: no se pudo obtener el tamaño total del disco. Verifica el disco especificado."
+  exit 1
+fi
+
+# Título
+echo "Monitoreo del porcentaje de uso del disco ($disk)"
+echo "Tamaño total del disco: ${total_space}GB"
+echo "Intervalo: $interval segundos (ejecutando indefinidamente)"
+echo "Barra máxima: $max_bar_length caracteres"
+echo "---------------------------------------------------"
+
+# Bucle para recopilar datos indefinidamente
+while true; do
+  timestamp=$(date +"%Y-%m-%d %H:%M:%S")  # Timestamp actual
+  free_space=$(get_free_space)           # Espacio libre actual
+
+  # Verificar si la medición fue correcta
+  if [[ -z "$free_space" ]]; then
+    echo "Error: no se pudo obtener el espacio libre. Verifica el disco especificado."
+    exit 1
+  fi
+
+  # Calcular el espacio usado y libre en porcentaje
+  used_space=$(echo "$total_space - $free_space" | bc)
+  free_percentage=$(echo "($free_space / $total_space) * 100" | bc -l | awk '{printf "%.0f", $0}')
+  usage_percentage=$((100 - free_percentage))
+
+  # Crear gráfica ASCII con una barra proporcional
+  bar_width=$(echo "($usage_percentage * $max_bar_length) / 100" | bc -l | awk '{printf "%.0f", $0}')  # Escala proporcional
+  bar=$(printf "#%.0s" $(seq 1 "$bar_width"))
+  empty_space=$(printf " %.0s" $(seq 1 $((max_bar_length - bar_width))))  # Espacios vacíos para completar
+
+  # Salida en una línea
+  echo "[$timestamp] | ${bar}${empty_space} | ${free_space}GB libres (${free_percentage}%) de ${total_space}GB"
+
+  # Guardar en log (opcional)
+  if [[ -n "$log_file" ]]; then
+    echo "[$timestamp] | ${bar}${empty_space} | ${free_space}GB libres (${free_percentage}%) de ${total_space}GB" >> "$log_file"
+  fi
+
+  sleep "$interval"
+done
