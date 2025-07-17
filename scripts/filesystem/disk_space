@@ -15,7 +15,7 @@ docs::parse "$@"
 disk="/"                 # Disco a monitorear
 interval=30              # Intervalo en segundos entre mediciones
 log_file="$HOME/disk_log.txt"  # Archivo de log (usa $HOME en lugar de ~)
-max_bar_length=50        # Número máximo de caracteres en la barra
+max_bar_length=25        # Número máximo de caracteres en la barra
 
 # Función para obtener el tamaño total del disco (en GB)
 get_total_space() {

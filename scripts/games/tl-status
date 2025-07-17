@@ -1,0 +1,97 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+source "$DOTLY_PATH/scripts/core/_main.sh"
+
+##? Remove tracked files from control version (not the file) that are in the gitignore
+##?
+##? Usage:
+##?   apply-gitignore
+docs::parse "$@"
+
+#!/bin/bash
+
+# URL de la página web
+URL="https://www.playthroneandliberty.com/es-es/support/server-status?language-picker=true"
+
+# Variable para almacenar el contenido anterior
+PREVIOUS_LABEL=""
+ATTEMPT_COUNT=0  # Contador de intentos
+SPINNER=("|" "/" "-" "\\")  # Alternancia del spinner
+TEMP_FILE="/tmp/tl-attempt-count.txt"
+echo "$ATTEMPT_COUNT" > "$TEMP_FILE"
+
+STATE_FILE="/tmp/tl-state.txt"
+touch "$STATE_FILE"
+
+# Leer el estado previo del archivo
+PREVIOUS_LABEL=$(cat "$STATE_FILE" || echo "Rebellion server status is Good")
+
+send_telegram_message() {
+    local message="$1"
+    curl -s -X POST "https://api.telegram.org/bot$TL_TELEGRAM_TOKEN/sendMessage" \
+        -d "chat_id=$TL_TELEGRAM_CHAT_ID" \
+        -d "text=$message" \
+        >/dev/null
+}
+
+# Función para mostrar el "cargando" con puntos dinámicos y un spinner fijo
+show_loading() {
+    local spinner=("|" "/" "-" "\\")
+    local i=0
+    while :; do
+        ATTEMPTS=$(cat "$TEMP_FILE")
+        local dots=$(printf "%.0s." $(seq 0 $((ATTEMPTS % 10))))
+
+        printf "\rCargando %s %s" "${spinner[i++ % ${#spinner[@]}]}" $dots
+        sleep 0.5
+    done
+}
+
+# Función principal
+main_loop() {
+    while :; do
+        sleep 1
+        HTML=$(curl -s "$URL")
+
+        ATTEMPT_COUNT=$((ATTEMPT_COUNT + 1))
+
+        # Buscar el elemento que contiene "Ember"
+        EMBER_LINE=$(echo "$HTML" | grep -o '<[^>]*>.*Rebellion.*<[^>]*>')
+
+        if [[ -n "$EMBER_LINE" ]]; then
+            # Extraer el aria-label
+            ARIA_LABEL=$(echo "$EMBER_LINE" | sed -E 's/.*aria-label="([^"]*)".*/\1/')
+
+            # Comparar con el contenido anterior
+            if [[ "$ARIA_LABEL" != "$PREVIOUS_LABEL" ]]; then
+                # Limpiar la línea de "Cargando" antes de imprimir el cambio
+                printf "\r%-80s\r" ""  # Limpiar la línea de "Cargando"
+                echo "Cambio detectado a las $(date '+%H:%M:%S'): $ARIA_LABEL"
+                send_telegram_message "Cambio detectado a las $(date '+%H:%M:%S'): $ARIA_LABEL"
+                echo "$ARIA_LABEL" > "$STATE_FILE"
+                PREVIOUS_LABEL="$ARIA_LABEL"  # Actualizar el contenido anterior
+                ATTEMPT_COUNT=0
+            fi
+        else
+            # Limpiar la línea de "Cargando" si hay error
+            printf "\r%-80s\r" ""  # Limpiar la línea de "Cargando"
+            echo "Texto 'Rebellion' no encontrado a las $(date '+%H:%M:%S')."
+        fi
+        # Incrementar el contador de intentos
+        echo "$ATTEMPT_COUNT" > "$TEMP_FILE"
+
+        sleep 5
+    done
+}
+
+# Ejecutar la función principal en segundo plano mientras se muestra el "cargando"
+show_loading &  # Esto corre en segundo plano
+LOADING_PID=$!  # Guardar el PID del proceso de "cargando"
+
+# Asegurar que se detenga correctamente el proceso de "cargando" al salir
+trap 'if kill -0 $LOADING_PID 2>/dev/null; then kill $LOADING_PID; fi; printf "\r%-80s\r" ""; exit' INT
+
+# Llamar a la función principal
+main_loop
