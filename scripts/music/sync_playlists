@@ -92,6 +92,13 @@ function exchange_code_for_tokens() {
 # Paso 3: Refrescar el token
 function refresh_access_token() {
   REFRESH_TOKEN=$(jq -r '.refresh_token' < "$TOKEN_FILE")
+  # Si el token de actualización no está presente, se debe obtener un nuevo token
+  if [[ -z "$REFRESH_TOKEN" || "$REFRESH_TOKEN" == "null" ]]; then
+    echo "El token de actualización no está disponible. Por favor, vuelve a autorizar la aplicación."
+    get_authorization_code
+    exchange_code_for_tokens
+    return
+  fi
   RESPONSE=$(curl -s -X POST "$TOKEN_URL" \
     -H "Authorization: Basic $(echo -n "$SPOTIFY_CLIENT_ID:$SPOTIFY_CLIENT_SECRET" | base64)" \
     -d grant_type=refresh_token \
@@ -246,7 +253,7 @@ echo "$selected_playlists" | while read -r playlist; do
   #  (cd "$spotify_sync_folder" && spotdl --overwrite metadata --print-errors --m3u "$playlist_info.m3u8" --save-file ".spotdl/$playlist_info.spotdl" --output "$playlist_info/{artists} - {title}.{output-ext}" sync "$playlist_url")
   # --client-id "$SPOTIFY_CLIENT_ID" --client-secret "$SPOTIFY_CLIENT_SECRET"
   ###command_to_execute="spotdl --overwrite metadata --scan-for-songs --user-auth $client_params --max-retries 25 --print-errors --m3u \"$playlist_info.m3u\" --cookie-file '~/.spotdl/braveCookies' --restrict strict --bitrate auto $sync_command"
-  command_to_execute="spotdl --overwrite metadata --scan-for-songs --auth-token $ACCESS_TOKEN --max-retries 25 --print-errors --m3u \"$playlist_info.m3u\" --cookie-file '~/.spotdl/braveCookies' --restrict strict --bitrate auto $sync_command"
+  command_to_execute="spotdl --overwrite metadata --scan-for-songs --auth-token $ACCESS_TOKEN --max-retries 100 --print-errors --m3u \"$playlist_info.m3u\" --cookie-file '~/.spotdl/braveCookies' --restrict strict --force-update-metadata --bitrate 128k $sync_command"
 
   # echo "$command_to_execute"
   (cd "$spotify_sync_folder/$playlist_info" && sh -c "$command_to_execute")
