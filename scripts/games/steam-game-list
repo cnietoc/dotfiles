@@ -1,0 +1,60 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+source "$DOTLY_PATH/scripts/core/_main.sh"
+
+##? List Steam games for a given user
+##?
+##? Requirements:
+##?   - Steam API Key (https://steamcommunity.com/dev/apikey)
+##?     (set it in $STEAM_API_KEY environment variable)
+##?   - Vanity URL of your Steam profile (e.g., apocaly2k)
+#?? 1.2.0
+##?
+##? Usage:
+##?   steam_games [VANITY_URL] [API_KEY]
+##?
+##? If arguments are not provided, it will use:
+##?   $STEAM_VANITY_URL (for vanity)
+##?   $STEAM_API_KEY    (for API key)
+docs::parse "$@"
+
+VANITY_URL="${1:-${STEAM_VANITY_URL:-}}"
+API_KEY="${2:-${STEAM_API_KEY:-}}"
+
+if [[ -z "$VANITY_URL" || -z "$API_KEY" ]]; then
+  echo "❌ Missing VANITY_URL or API_KEY." >&2
+  echo "   Usage: steam_games [VANITY_URL] [API_KEY]" >&2
+  echo "   Or set STEAM_VANITY_URL and STEAM_API_KEY env vars." >&2
+  exit 1
+fi
+
+resolve_vanity() {
+  curl -s "https://api.steampowered.com/ISteamUser/ResolveVanityURL/v0001/" \
+    --get \
+    --data-urlencode "key=${API_KEY}" \
+    --data-urlencode "vanityurl=${VANITY_URL}" \
+    | jq -r '.response.steamid // empty'
+}
+
+fetch_games() {
+  local steamid="$1"
+  curl -s "https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/" \
+    --get \
+    --data-urlencode "key=${API_KEY}" \
+    --data-urlencode "steamid=${steamid}" \
+    --data-urlencode "include_appinfo=true" \
+    --data-urlencode "format=json"
+}
+
+steamid="$(resolve_vanity)"
+
+if [[ -z "$steamid" ]]; then
+  echo "❌ Could not resolve SteamID for '$VANITY_URL'" >&2
+  exit 1
+fi
+
+games_json="$(fetch_games "$steamid")"
+
+jq -r '.response.games[] | "\(.appid)\t\(.name)"' <<< "$games_json"

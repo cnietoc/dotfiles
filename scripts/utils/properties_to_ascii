@@ -1,0 +1,95 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+source "$DOTLY_PATH/scripts/core/_main.sh"
+
+##? Convert a properties file to ASCII format (like native2ascii)
+#?? 1.0.0
+##?
+##? Usage:
+##?   properties_to_ascii <input_file> [output_file]
+##?
+##? Arguments:
+##?   input_file   The properties file to convert
+##?   output_file  The output file (optional, defaults to input_file.ascii)
+
+# Validate input parameters
+if [ $# -eq 0 ]; then
+    echo "Error: Input file is required"
+    echo "Usage: properties_to_ascii <input_file> [output_file]"
+    exit 1
+fi
+
+input_file="$1"
+output_file="${2:-${input_file}.ascii}"
+
+# Check if input file exists
+if [ ! -f "$input_file" ]; then
+    echo "Error: Input file '$input_file' does not exist"
+    exit 1
+fi
+
+# Convert properties file to ASCII format
+# This function converts non-ASCII characters to \uXXXX format
+convert_to_ascii() {
+    local input="$1"
+    local output="$2"
+
+    # Use Python to convert Unicode characters to ASCII escape sequences
+    python3 -c "
+import sys
+import codecs
+
+def unicode_escape(text):
+    result = ''
+    for char in text:
+        if ord(char) > 127:
+            result += '\\\\u{:04x}'.format(ord(char))
+        else:
+            result += char
+    return result
+
+def try_encodings(filename):
+    encodings = ['utf-8', 'latin-1', 'iso-8859-1', 'cp1252']
+    for encoding in encodings:
+        try:
+            with open(filename, 'r', encoding=encoding) as f:
+                content = f.read()
+            return content, encoding
+        except UnicodeDecodeError:
+            continue
+    raise Exception('Could not decode file with any of the common encodings')
+
+try:
+    content, encoding = try_encodings('$input')
+    print(f'Successfully read file with encoding: {encoding}')
+
+    ascii_content = unicode_escape(content)
+
+    with open('$output', 'w', encoding='ascii') as f:
+        f.write(ascii_content)
+
+    print(f'Successfully converted {len(content)} characters')
+    print(f'Output written to: $output')
+
+except FileNotFoundError:
+    print('Error: Input file not found', file=sys.stderr)
+    sys.exit(1)
+except Exception as e:
+    print(f'Error: {e}', file=sys.stderr)
+    sys.exit(1)
+"
+}
+
+echo "Converting properties file to ASCII format..."
+echo "Input:  $input_file"
+echo "Output: $output_file"
+echo
+
+convert_to_ascii "$input_file" "$output_file"
+
+# Show notification on macOS
+if command -v osascript >/dev/null 2>&1; then
+    osascript -e "display notification \"Converted $input_file to ASCII format\" with title \"Properties to ASCII\""
+fi

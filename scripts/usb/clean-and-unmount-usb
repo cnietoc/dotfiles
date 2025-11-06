@@ -1,0 +1,100 @@
+#!/usr/bin/env bash
+
+# set -euo pipefail
+
+source "$DOTLY_PATH/scripts/core/_main.sh"
+
+##? Clean and safely unmount external USB volumes (macOS)
+##?
+##? Requirements:
+##?   - fzf
+##?   - diskutil (macOS built-in)
+##?   - (optional) dot_clean for AppleDouble cleanup
+#?? 1.2.0
+##?
+##? Usage:
+##?   clean_usb
+##?
+##? What it does:
+##?   - Lists mounted folders under /Volumes
+##?   - Keeps only those backed by USB devices
+##?   - Lets you pick one or multiple with fzf
+##?   - Removes macOS junk (.DS_Store, ._*, .Trashes, Spotlight, .fseventsd)
+##?   - Unmounts each selected volume safely
+docs::parse "$@"
+
+list_usb_volumes() {
+  for mp in /Volumes/*; do
+    [[ -d "$mp" ]] || continue
+
+    # Detect device for this mountpoint
+    dev="$(mount | awk -v m="$mp" '$0 ~ " on "m" " {print $1; exit}')"
+    [[ -n "$dev" ]] || continue
+
+    proto="$(diskutil info "$dev" | awk -F': ' '/Protocol:/ {print $2; exit}' | xargs)"
+
+    if [[ "${proto}" == "USB" ]]; then
+      fs="$(diskutil info "$dev" | awk -F': ' \
+              '/File System Personality:/ {print $2; found=1}
+               END {if(!found) print "Unknown"}')"
+      printf "%s\t%s\t%s\n" "$mp" "$dev" "$fs"
+    fi
+  done
+}
+
+select_volumes() {
+  local list
+  list="$(list_usb_volumes)"
+
+  if [[ -z "${list}" ]]; then
+    echo "❌ No USB volumes mounted under /Volumes." >&2
+    exit 1
+  fi
+
+  echo "${list}" \
+    | fzf -m --delimiter='\t' --with-nth=1,3 --prompt="Select USB volume(s) to clean: " \
+    || true
+}
+
+clean_volume() {
+  local mp="$1"
+  echo "🧹 Cleaning: $mp"
+
+  if command -v dot_clean >/dev/null 2>&1; then
+    dot_clean -m -f "$mp" || true
+  fi
+
+  find "$mp" -name ".DS_Store" -delete 2>/dev/null || true
+  find "$mp" -name "._*" -delete 2>/dev/null || true
+  rm -rf "$mp/.Trashes" "$mp/.Spotlight-V100" "$mp/.fseventsd" 2>/dev/null || true
+
+  echo "✅ Cleaned: $mp"
+}
+
+unmount_volume() {
+  local mp="$1"
+  echo "💿 Unmounting: $mp"
+  diskutil unmount "$mp" >/dev/null
+  echo "🔌 Unmounted: $mp"
+}
+
+main() {
+  local selection
+  selection="$(select_volumes)"
+  if [[ -z "${selection}" ]]; then
+    echo "ℹ️ No volume selected."
+    exit 0
+  fi
+
+  while IFS=$'\n' read -r line; do
+    mp="$(awk -F'\t' '{print $1}' <<< "$line")"
+    if [[ -d "$mp" ]]; then
+      clean_volume "$mp"
+      unmount_volume "$mp"
+    else
+      echo "⚠️ Skipped (not mounted anymore): $mp"
+    fi
+  done <<< "$selection"
+}
+
+main "$@"

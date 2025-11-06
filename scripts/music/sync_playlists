@@ -8,11 +8,12 @@ source "$DOTLY_PATH/scripts/core/_main.sh"
 #?? 1.0.0
 ##?
 ##? Usage:
-##?   sync_playlists
-##?   sync_playlists -d
+##?   sync_playlists [-d|--default] [-n|--normalize]
 ##?
 ##? Options:
-##?   -d --default   Uses default client id and secret
+##?   -h --help        Show this screen.
+##?   -d --default     Uses default client id and secret
+##?   -n --normalize   Normalizes the cover images
 docs::parse "$@"
 
 declare -A extra_playlists=(
@@ -253,8 +254,14 @@ echo "$selected_playlists" | while read -r playlist; do
   #  (cd "$spotify_sync_folder" && spotdl --overwrite metadata --print-errors --m3u "$playlist_info.m3u8" --save-file ".spotdl/$playlist_info.spotdl" --output "$playlist_info/{artists} - {title}.{output-ext}" sync "$playlist_url")
   # --client-id "$SPOTIFY_CLIENT_ID" --client-secret "$SPOTIFY_CLIENT_SECRET"
   ###command_to_execute="spotdl --overwrite metadata --scan-for-songs --user-auth $client_params --max-retries 25 --print-errors --m3u \"$playlist_info.m3u\" --cookie-file '~/.spotdl/braveCookies' --restrict strict --bitrate auto $sync_command"
-  command_to_execute="spotdl --overwrite metadata --scan-for-songs --auth-token $ACCESS_TOKEN --max-retries 100 --print-errors --m3u \"$playlist_info.m3u\" --cookie-file '~/.spotdl/braveCookies' --restrict strict --force-update-metadata --bitrate 128k $sync_command"
+  command_to_execute="spotdl --lyrics genius --overwrite metadata --scan-for-songs --auth-token $ACCESS_TOKEN --max-retries -1 --print-errors --m3u \"$playlist_info.m3u\" --cookie-file '~/.spotdl/braveCookies' --restrict strict --force-update-metadata --bitrate 128k $sync_command"
 
   # echo "$command_to_execute"
   (cd "$spotify_sync_folder/$playlist_info" && sh -c "$command_to_execute")
+
+  if $normalize; then
+    echo "Normalizando las carátulas de $playlist_info"
+    dot music normalize_cover "$spotify_sync_folder/$playlist_info"
+  fi
+
 done
