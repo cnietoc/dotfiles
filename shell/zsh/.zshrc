@@ -26,6 +26,11 @@ ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)
 # Start Zim
 source "$ZIM_HOME/init.zsh"
 
+# Compile ZIM init if needed
+if [[ ! -f "$ZIM_HOME/init.zsh.zwc" || "$ZIM_HOME/init.zsh" -nt "$ZIM_HOME/init.zsh.zwc" ]]; then
+  zcompile "$ZIM_HOME/init.zsh"
+fi
+
 # Async mode for autocompletion
 ZSH_AUTOSUGGEST_USE_ASYNC=true
 ZSH_HIGHLIGHT_MAXLENGTH=300
@@ -43,7 +48,7 @@ prompt ${DOTLY_THEME:-codely}
 source "$DOTLY_PATH/shell/zsh/bindings/dot.zsh"
 source "$DOTLY_PATH/shell/zsh/bindings/reverse_search.zsh"
 source "$DOTFILES_PATH/shell/zsh/key-bindings.zsh"
-source "$DOTFILES_PATH/shell/zsh/lazy-functions.zsh"
+# source "$DOTFILES_PATH/shell/zsh/lazy-functions.zsh" # Only for node tools, let Mise handle it
 
 # if Mise is installed, activate it
 if command -v mise &> /dev/null; then
