@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+set -uo pipefail
+
+source "$DOTLY_PATH/scripts/core/_main.sh"
+source "$DOTFILES_PATH/scripts/package/src/package_managers/mise.sh"
+source "$DOTFILES_PATH/scripts/package/src/package_managers/pipx.sh"
+
+##? Update all packages
+##?
+##? Usage:
+##?   improved_update_all
+docs::parse "$@"
+
+output::header "⬆️ Updating all packages managed by dotly"
+output::empty_line
+
+dot package update_all
+
+output::header "♻️ Updating others tools on your system"
+
+platform::command_exists mise && output::h2 '💻 mise' && mise::update_all
+platform::command_exists pipx && output::h2 '🐍 pipx' && pipx::update_all
+
+output::empty_line
+output::write '👌 All updated'

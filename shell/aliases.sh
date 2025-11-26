@@ -27,7 +27,7 @@ alias k='kill -9'
 alias i.='(idea $PWD &>/dev/null &)'
 alias c.='(code $PWD &>/dev/null &)'
 alias o.='open .'
-alias up='dot package update_all'
+alias up='dot package improved_update_all'
 
 # Python
 alias python="python3"

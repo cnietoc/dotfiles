@@ -21,3 +21,4 @@
     ~/.inputrc: shell/.inputrc
     ~/.gitconfig: git/.gitconfig
     ~/.gitignore_global: git/.gitignore_global
+    ~/.config/mise/config.toml: shell/mise/config.toml

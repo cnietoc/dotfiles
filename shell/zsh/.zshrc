@@ -45,8 +45,7 @@ source "$DOTLY_PATH/shell/zsh/bindings/reverse_search.zsh"
 source "$DOTFILES_PATH/shell/zsh/key-bindings.zsh"
 source "$DOTFILES_PATH/shell/zsh/lazy-functions.zsh"
 
-# Load SDKMAN
-[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
-
-# Load thefuck
-eval $(thefuck --alias)
+# if Mise is installed, activate it
+if command -v mise &> /dev/null; then
+  eval "$(mise activate zsh)"
+fi

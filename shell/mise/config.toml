@@ -1,0 +1,7 @@
+[settings]
+idiomatic_version_file_enable_tools = ["java"]
+
+[tools]
+gradle = "latest"
+java = "latest"
+maven = "latest"

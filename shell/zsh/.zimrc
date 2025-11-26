@@ -1,5 +1,6 @@
 # If you modify this execute `zimfw uninstall & zimfw install`
 zmodule zimfw/completion
+zmodule joke/zim-mise
 zmodule Aloxaf/fzf-tab
 zmodule zimfw/environment
 zmodule zimfw/git-info
