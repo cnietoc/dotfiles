@@ -1,0 +1,10 @@
+[project]
+name = "update-router-dhcp"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = [
+    "notion-client>=2.7.0",
+    "paramiko>=4.0.0",
+]

@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+source "$DOTLY_PATH/scripts/core/_main.sh"
+
+##? Update router DHCP from Notion database
+#?? 1.0.0
+##?
+##? Usage:
+##?   ip
+docs::parse "$@"
+
+cd "$DOTFILES_PATH/scripts/network/src/update_router_dhcp" || exit 1
+uv run main.py || exit 1

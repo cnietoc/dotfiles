@@ -1,7 +1,10 @@
 [settings]
-idiomatic_version_file_enable_tools = ["java"]
+idiomatic_version_file_enable_tools = ["java", "python"]
+python.uv_venv_auto = true
 
 [tools]
 gradle = "latest"
 java = "latest"
 maven = "latest"
+ruby = "latest"
+uv = "latest"

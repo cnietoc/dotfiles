@@ -3,8 +3,6 @@ alias sudo='sudo '
 
 alias ..="cd .."
 alias ...="cd ../.."
-alias ll="ls -l"
-alias la="ls -la"
 alias ~="cd ~"
 alias dotfiles='cd $DOTFILES_PATH'
 
@@ -34,3 +32,22 @@ alias python="python3"
 
 # Telefonica
 alias devtools='if [[ ":$PATH:" != *":$DEVTOOLS_PATH/bin:"* ]]; then export PATH="$DEVTOOLS_PATH/bin:$PATH"; echo "Enabled devtools"; else export PATH=$(echo "$PATH" | tr ":" "\n" | grep -v "$DEVTOOLS_PATH/bin" | tr "\n" ":"); PATH=${PATH%:}; echo "Disabled devtools"; fi'
+
+# Eza
+alias ls="eza --icons --group-directories-first"
+# listado largo
+alias ll="eza -l --git --icons --group-directories-first"
+# incluye ocultos
+alias la="eza -la --git --icons --group-directories-first"
+# solo ocultos (útil)
+alias lh="eza -ld .*"
+# árbol de directorios
+alias tree="eza --tree --icons"
+# tamaño humano siempre
+alias lls="eza -l --git --icons"
+# tamaño humano y ordenado por tamaño
+alias llS="eza -lS --git --icons"
+# tamaño humano y ordenado por fecha de modificación
+alias llt="eza -lt --git --icons"
+# tamaño humano y ordenado por extensión
+alias llX="eza -lX --git --icons"

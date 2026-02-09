@@ -37,7 +37,7 @@ if [ -z "$SPOTIFY_CLIENT_ID" ] || [ -z "$SPOTIFY_CLIENT_SECRET" ]; then
   exit 1
 fi
 
-REDIRECT_URI="http://localhost:8888/callback"
+REDIRECT_URI="http://127.0.0.1:8888/callback"
 AUTH_URL="https://accounts.spotify.com/authorize"
 TOKEN_URL="https://accounts.spotify.com/api/token"
 API_URL="https://api.spotify.com/v1"

@@ -10,6 +10,8 @@
 
 - link:
     ~/.dotly: os/mac/.dotly
+    ~/.config/ghostty: os/mac/ghostty
+    ~/.config/topgrade.toml: os/mac/topgrade/topgrade.toml
     modules/private: ~/Library/CloudStorage/OneDrive-Personal/dotfiles
     ~/bin/bash: /opt/homebrew/bin/bash
     ~/bin/date: /opt/homebrew/bin/gdate

@@ -11,5 +11,19 @@ source "$DOTLY_PATH/scripts/core/_main.sh"
 ##?   prune
 docs::parse "$@"
 
-dot docker stop_all
-yes | docker system prune -a
+# if docker ps -aq returns something, then remove all containers
+echo "Stopping all docker containers..."
+docker ps -a -q | xargs -I_ docker stop "_"
+echo "Removing all docker containers..."
+docker ps -a -q | xargs -I_ docker rm -f "_"
+echo "Removing all docker volumes..."
+docker volume ls -q | xargs -I_ docker volume rm "_"
+echo "Removing all docker networks..."
+docker network prune -f
+echo "Removing all docker images..."
+docker image prune -a -f
+echo "Removing all docker builders..."
+docker builder prune -a -f
+echo "Removing all docker system stuff..."
+docker system prune -a -f
+echo "Done! Now you can start fresh with docker!"
