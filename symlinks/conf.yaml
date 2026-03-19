@@ -22,3 +22,4 @@
     ~/.gitconfig: git/.gitconfig
     ~/.gitignore_global: git/.gitignore_global
     ~/.config/mise: langs/mise
+    ~/.config/fastfetch: shell/fastfetch

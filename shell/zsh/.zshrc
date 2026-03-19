@@ -60,3 +60,5 @@ fi
 
 autoload -Uz promptinit && promptinit
 prompt ${DOTLY_THEME:-codely}
+
+${DOTFILES_PATH}/shell/fastfetch/run.sh
