@@ -46,14 +46,10 @@ source "$ZIM_HOME/init.zsh"
 # ZSH style
 if [[ -z $TMUX ]]; then
   zstyle ':completion:*:descriptions' format '[%d]'
-
   zstyle ':fzf-tab:*' switch-group ',' '.'
   zstyle ':fzf-tab:*' fzf-flags --height=40% --layout=reverse --border
   zstyle ':fzf-tab:*' use-fzf-default-opts yes
-
-
-  #zstyle ':fzf-tab:complete:*:*' fzf-preview 'bat --color=always --style=numbers --line-range=:500 -- $realpath 2>/dev/null || eza -la --color=always $realpath'
-  zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always $realpath'
+  zstyle ':fzf-tab:complete:*' fzf-preview '${DOTFILES_PATH}/shell/zsh/preview.sh $realpath'
 else
   zstyle ':fzf-tab:*' fzf-command ftb-tmux-popup
 fi;
