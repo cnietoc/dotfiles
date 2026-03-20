@@ -87,3 +87,15 @@ path=(
 )
 
 export path
+
+# --------------------------------------------------------------------------------
+# Fpath - The higher it is, the more priority it has
+# --------------------------------------------------------------------------------
+fpath=(
+    "$DOTFILES_PATH/shell/zsh/themes"
+    "$DOTFILES_PATH/shell/zsh/completions"
+    "$DOTLY_PATH/shell/zsh/themes"
+    "$DOTLY_PATH/shell/zsh/completions"
+    $fpath)
+
+export fpath

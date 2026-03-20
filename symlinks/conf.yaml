@@ -23,3 +23,4 @@
     ~/.gitignore_global: git/.gitignore_global
     ~/.config/mise: langs/mise
     ~/.config/fastfetch: shell/fastfetch
+    ~/.config/starship.toml: shell/starship/starship.toml
