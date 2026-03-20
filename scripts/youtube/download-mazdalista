@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+set -eo pipefail
+
+source "$DOTLY_PATH/scripts/core/_main.sh"
+
+##? Downloads a video audio in the current directory
+##?
+##? Usage:
+##?   download-mazdalista
+
+yt-dlp \
+  -f bestaudio \
+  -x --audio-format mp3 --audio-quality 0 \
+  --embed-metadata --embed-thumbnail \
+  --cookies-from-browser chrome \
+  --download-archive "$HOME/OneDrive - Personal/OneDrive/Música/Youtube/Mazdalista/archive.txt" \
+  -o "$HOME/OneDrive - Personal/OneDrive/Música/Youtube/Mazdalista/%(playlist_index)03d - %(title)s.%(ext)s" \
+  --trim-filenames 250 \
+  --windows-filenames \
+  "https://youtube.com/playlist?list=PLsQJUwG7x96EYD_u3yOAeIt-Buf356dj6"

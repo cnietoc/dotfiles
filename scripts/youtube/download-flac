@@ -8,4 +8,4 @@ source "$DOTLY_PATH/scripts/core/_main.sh"
 ##? Usage:
 ##?   download-mp3 <url>
 
-yt-dlp -x -f bestaudio --audio-format mp3 --embed-metadata --embed-thumbnail "$1"
+yt-dlp -x -f bestaudio --audio-format flac --embed-metadata --embed-thumbnail "$1"

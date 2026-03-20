@@ -2,63 +2,62 @@
 # Uncomment for debuf with `zprof`
 # zmodload zsh/zprof
 
+source "$DOTLY_PATH/shell/zsh/bindings/dot.zsh"
+source "$DOTLY_PATH/shell/zsh/bindings/reverse_search.zsh"
+source "$DOTFILES_PATH/shell/zsh/key-bindings.zsh"
+source "$DOTFILES_PATH/shell/zsh/lazy-functions.zsh"
+source "$DOTFILES_PATH/shell/init.sh"
+
 # ZSH Ops
 # History
-setopt HIST_IGNORE_ALL_DUPS
-setopt HIST_SAVE_NO_DUPS
-setopt HIST_REDUCE_BLANKS
-setopt INC_APPEND_HISTORY_TIME
-setopt EXTENDED_HISTORY
-setopt HIST_FCNTL_LOCK
+export HISTSIZE=200000                 # en memoria
+export SAVEHIST=200000                 # en disco
 
-setopt +o nomatch
-# setopt autopushd
+# Escritura/lectura entre varias terminales
+setopt APPEND_HISTORY                  # nunca sobrescribe, siempre añade
+setopt INC_APPEND_HISTORY_TIME         # escribe al terminar cada comando (con duración)
+setopt SHARE_HISTORY                   # comparte historial en tiempo real entre sesiones
+setopt HIST_FCNTL_LOCK                 # lock seguro del archivo (importante con varias sesiones)
 
-# ZSH style
-if [[ -z $TMUX ]]; then
-  zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always $realpath'
-else
-  zstyle ':fzf-tab:*' fzf-command ftb-tmux-popup
-fi;
+# Limpieza de historial
+setopt HIST_IGNORE_ALL_DUPS            # elimina duplicados antiguos al guardar uno nuevo
+setopt HIST_SAVE_NO_DUPS               # no duplica al volcar a fichero
+setopt HIST_IGNORE_SPACE               # no guarda comandos con espacio inicial
+setopt HIST_REDUCE_BLANKS              # normaliza espacios
+setopt HIST_FIND_NO_DUPS               # búsquedas más limpias
+setopt EXTENDED_HISTORY                # timestamp + duración
+
+setopt nomatch
+setopt autopushd
 
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)
-
-fpath=(
-    "$DOTFILES_PATH/shell/zsh/themes"
-    "$DOTFILES_PATH/shell/zsh/completions"
-    "$DOTLY_PATH/shell/zsh/themes"
-    "$DOTLY_PATH/shell/zsh/completions"
-    "$HOMEBREW_PREFIX/share/zsh/site-functions"
-    $fpath)
-
 # Async mode for autocompletion
 ZSH_AUTOSUGGEST_USE_ASYNC=true
 ZSH_HIGHLIGHT_MAXLENGTH=300
-
-source "$DOTFILES_PATH/shell/init.sh"
-
-# Start Zim
-source "$ZIM_HOME/init.zsh"
 
 # Compile ZIM init if needed
 if [[ ! -f "$ZIM_HOME/init.zsh.zwc" || "$ZIM_HOME/init.zsh" -nt "$ZIM_HOME/init.zsh.zwc" ]]; then
   zcompile "$ZIM_HOME/init.zsh"
 fi
 
-# Kubectl completions
-source <(kubectl completion zsh)
+# Start Zim
+source "$ZIM_HOME/init.zsh"
 
-source "$DOTLY_PATH/shell/zsh/bindings/dot.zsh"
-source "$DOTLY_PATH/shell/zsh/bindings/reverse_search.zsh"
-source "$DOTFILES_PATH/shell/zsh/key-bindings.zsh"
-# source "$DOTFILES_PATH/shell/zsh/lazy-functions.zsh" # Only for node tools, let Mise handle it
+# ZSH style
+if [[ -z $TMUX ]]; then
+  zstyle ':completion:*:descriptions' format '[%d]'
 
-# if Mise is installed, activate it
-if command -v mise &> /dev/null; then
-  eval "$(mise activate zsh)"
-fi
+  zstyle ':fzf-tab:*' switch-group ',' '.'
+  zstyle ':fzf-tab:*' fzf-flags --height=40% --layout=reverse --border
+  zstyle ':fzf-tab:*' use-fzf-default-opts yes
 
-autoload -Uz promptinit && promptinit
-prompt ${DOTLY_THEME:-codely}
+
+  #zstyle ':fzf-tab:complete:*:*' fzf-preview 'bat --color=always --style=numbers --line-range=:500 -- $realpath 2>/dev/null || eza -la --color=always $realpath'
+  zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always $realpath'
+else
+  zstyle ':fzf-tab:*' fzf-command ftb-tmux-popup
+fi;
 
 ${DOTFILES_PATH}/shell/fastfetch/run.sh
+
+eval "$(starship init zsh)"
