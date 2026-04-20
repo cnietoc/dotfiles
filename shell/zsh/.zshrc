@@ -57,3 +57,11 @@ fi;
 ${DOTFILES_PATH}/shell/fastfetch/run.sh
 
 eval "$(starship init zsh)"
+
+if command -v mise &> /dev/null; then
+  eval "$(mise activate zsh)"
+fi
+
+# Added by ToolHive UI - do not modify this block
+export PATH="$HOME/.toolhive/bin:$PATH"
+# End ToolHive UI

@@ -6,5 +6,4 @@ python.uv_venv_auto = true
 gradle = "latest"
 java = "latest"
 maven = "latest"
-ruby = "latest"
 uv = "latest"

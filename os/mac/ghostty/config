@@ -1,6 +1,13 @@
 # Font
 font-family = FiraCode Nerd Font
 font-size = 16
+
+# Shell Integration
+shell-integration-features = ssh-terminfo,ssh-env
+
+# UI
+fullscreen = true
+
 #font-thicken = false
 #font-style-bold = false
 #font-style-bold-italic = false
