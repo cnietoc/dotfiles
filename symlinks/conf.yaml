@@ -26,3 +26,4 @@
     ~/.config/starship.toml: shell/starship/starship.toml
     ~/.config/nvim: editors/nvim
     ~/.config/bat/config: shell/bat/config
+    ~/.config/ghostty/config: os/mac/ghostty/config
