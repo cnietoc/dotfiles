@@ -47,8 +47,6 @@ function load_secrets() {
             spotify)
                 export SPOTIFY_CLIENT_ID=$(bw get username spotify-api --session "$BW_SESSION")
                 export SPOTIFY_CLIENT_SECRET=$(bw get password spotify-api --session "$BW_SESSION")
-                export SPOTIPY_CLIENT_ID="$SPOTIFY_CLIENT_ID"
-                export SPOTIPY_CLIENT_SECRET="$SPOTIFY_CLIENT_SECRET"
                 ;;
             telegram)
                 export TL_TELEGRAM_TOKEN=$(bw get password telegram-tl-bot --session "$BW_SESSION")
