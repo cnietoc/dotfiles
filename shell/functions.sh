@@ -37,7 +37,7 @@ function bwu() {
 }
 
 function load_secrets() {
-    [[ -z "$BW_SESSION" ]] && bwu
+    [[ -z "${BW_SESSION:-}" ]] && bwu
     for scope in "$@"; do
         case "$scope" in
             spotify)
