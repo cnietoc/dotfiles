@@ -20,10 +20,12 @@ function bwu() {
     "unauthenticated")
         echo "Logging into BitWarden"
         export BW_SESSION=$(bw login --raw)
+        [[ -z "$BW_SESSION" ]] && { echo "Login failed" >&2; return 1; }
         ;;
     "locked")
         echo "Unlocking Vault"
         export BW_SESSION=$(bw unlock --raw)
+        [[ -z "$BW_SESSION" ]] && { echo "Unlock failed (wrong password?)" >&2; return 1; }
         ;;
     "unlocked")
         echo "Vault is unlocked"
