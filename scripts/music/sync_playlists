@@ -3,6 +3,8 @@
 set -euo pipefail
 
 source "$DOTLY_PATH/scripts/core/_main.sh"
+source "$DOTFILES_PATH/shell/functions.sh"
+load_secrets spotify
 
 ##? Sync playlists from Spotify on OneDrive
 #?? 1.0.0

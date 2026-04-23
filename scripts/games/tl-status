@@ -3,6 +3,8 @@
 set -euo pipefail
 
 source "$DOTLY_PATH/scripts/core/_main.sh"
+source "$DOTFILES_PATH/shell/functions.sh"
+load_secrets telegram
 
 ##? Remove tracked files from control version (not the file) that are in the gitignore
 ##?

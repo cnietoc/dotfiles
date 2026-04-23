@@ -40,6 +40,38 @@ function bwu() {
     bw sync
 }
 
+function load_secrets() {
+    [[ -z "$BW_SESSION" ]] && bwu
+    for scope in "$@"; do
+        case "$scope" in
+            spotify)
+                export SPOTIFY_CLIENT_ID=$(bw get username spotify-api --session "$BW_SESSION")
+                export SPOTIFY_CLIENT_SECRET=$(bw get password spotify-api --session "$BW_SESSION")
+                export SPOTIPY_CLIENT_ID="$SPOTIFY_CLIENT_ID"
+                export SPOTIPY_CLIENT_SECRET="$SPOTIFY_CLIENT_SECRET"
+                ;;
+            telegram)
+                export TL_TELEGRAM_TOKEN=$(bw get password telegram-tl-bot --session "$BW_SESSION")
+                export TL_TELEGRAM_CHAT_ID=$(bw get notes telegram-tl-bot --session "$BW_SESSION")
+                ;;
+            steam)
+                export STEAM_API_KEY=$(bw get password steam-api --session "$BW_SESSION")
+                export STEAM_VANITY_URL=$(bw get username steam-api --session "$BW_SESSION")
+                ;;
+            notion)
+                export NOTION_TOKEN=$(bw get password notion-api --session "$BW_SESSION")
+                export NOTION_DHCP_DATASOURCE=$(bw get notes notion-api --session "$BW_SESSION")
+                ;;
+            router)
+                export ROUTER_IP=$(bw get uris router-home --session "$BW_SESSION")
+                export ROUTER_USER=$(bw get username router-home --session "$BW_SESSION")
+                export ROUTER_PASS=$(bw get password router-home --session "$BW_SESSION")
+                ;;
+            *) echo "load_secrets: unknown scope '$scope'" >&2; return 1 ;;
+        esac
+    done
+}
+
 bitrate () {
     echo `basename "$1"`: `file "$1" | sed 's/.*, \(.*\)kbps.*/\1/' | tr -d " " ` kbps
 }
