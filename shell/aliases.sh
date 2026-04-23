@@ -21,7 +21,7 @@ alias gb="git branch"
 alias gl='$DOTLY_PATH/bin/dot git pretty-log'
 
 # Utils
-alias k='kill -9'
+alias k9='kill -9'
 alias i.='(idea $PWD &>/dev/null &)'
 alias c.='(code $PWD &>/dev/null &)'
 alias o.='open .'
@@ -59,3 +59,27 @@ alias lg='lazygit'
 alias v='nvim'
 alias vi='nvim'
 alias vim='nvim'
+
+# ------------------------------------------------------------------------------
+# Kubernetes
+# ------------------------------------------------------------------------------
+alias k='kubectl'
+alias kgp='kubectl get pods'
+alias kgs='kubectl get svc'
+alias kgn='kubectl get nodes'
+alias kd='kubectl describe'
+alias kl='kubectl logs -f'
+alias kx='kubectx'
+alias kn='kubens'
+
+# ------------------------------------------------------------------------------
+# Helm
+# ------------------------------------------------------------------------------
+alias h='helm'
+alias hf='helmfile'
+
+# ------------------------------------------------------------------------------
+# Docker
+# ------------------------------------------------------------------------------
+alias d='docker'
+alias dc='docker compose'
