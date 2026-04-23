@@ -61,6 +61,10 @@ function load_secrets() {
                 export ROUTER_USER=$(bw get username router-home --session "$BW_SESSION")
                 export ROUTER_PASS=$(bw get password router-home --session "$BW_SESSION")
                 ;;
+            atuin)
+                export ATUIN_USERNAME=$(bw get username "hub.atuin.sh" --session "$BW_SESSION")
+                export ATUIN_PASSWORD=$(bw get password "hub.atuin.sh" --session "$BW_SESSION")
+                ;;
             *) echo "load_secrets: unknown scope '$scope'" >&2; return 1 ;;
         esac
     done
