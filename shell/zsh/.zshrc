@@ -67,3 +67,4 @@ export PATH="$HOME/.toolhive/bin:$PATH"
 # End ToolHive UI
 
 eval "$(zoxide init zsh)"
+eval "$(atuin init zsh)"

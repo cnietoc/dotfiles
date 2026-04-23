@@ -51,3 +51,6 @@ alias llS="eza -lS --git --icons"
 alias llt="eza -lt --git --icons"
 # tamaño humano y ordenado por extensión
 alias llX="eza -lX --git --icons"
+
+# Lazygit
+alias lg='lazygit'
