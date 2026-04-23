@@ -7,3 +7,10 @@
 
 - link:
     ~/.dotly: os/linux/.dotly
+    ~/.zshrc: shell/zsh/.zshrc
+    ~/.config/starship.toml: shell/starship/starship.toml
+    ~/.config/mise: langs/mise
+    ~/.tmux.conf: shell/tmux/tmux.conf
+    ~/.config/nvim: editors/nvim
+    ~/.gitconfig: git/.gitconfig
+    ~/.gitignore_global: git/.gitignore_global

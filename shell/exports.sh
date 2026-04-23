@@ -3,24 +3,20 @@
 # ------------------------------------------------------------------------------
 export CODELY_THEME_MODE="dark"
 export CODELY_THEME_PWD_MODE="home_relative"    # full, short, home_relative
-export CODELY_THEME_STATUS_ICON_OK="➤"  #  ﭧ ﯓ ﬦ          
+export CODELY_THEME_STATUS_ICON_OK="➤"  #  ﭧ ﯓ ﬦ
 export CODELY_THEME_STATUS_ICON_KO="✖"  # ﮊ
 export CODELY_THEME_PROMPT_IN_NEW_LINE=true
 
-if [[ $__CFBundleIdentifier == "com.jetbrains."* ]]; then
-  export CODELY_THEME_MINIMAL=false
-fi
+if [[ "$(uname -s)" == "Darwin" ]]; then
+  if [[ $__CFBundleIdentifier == "com.jetbrains."* ]]; then
+    export CODELY_THEME_MINIMAL=false
+  fi
 
-if [[ $__CFBundleIdentifier == "com.microsoft."* ]]; then
-  export CODELY_THEME_MINIMAL=true
-  export CODELY_THEME_MODE=light
+  if [[ $__CFBundleIdentifier == "com.microsoft."* ]]; then
+    export CODELY_THEME_MINIMAL=true
+    export CODELY_THEME_MODE=light
+  fi
 fi
-
-# ------------------------------------------------------------------------------
-# Languages
-# ------------------------------------------------------------------------------
-export GEM_HOME="$HOME/.gem"
-export GOPATH="$HOME/.go"
 
 # ------------------------------------------------------------------------------
 # Apps
@@ -44,22 +40,24 @@ fi
 # Default lang
 export LANG="es_ES.UTF-8"
 
-# ------------------------------------------------------------------------------
-# OneDrive
-# ------------------------------------------------------------------------------
-export ONE_DRIVE_TELEFONICA="$HOME/Library/CloudStorage/OneDrive-Telefonica"
-export ONE_DRIVE_PERSONAL="$HOME/Library/CloudStorage/OneDrive-Personal"
+if [[ "$(uname -s)" == "Darwin" ]]; then
+  # ------------------------------------------------------------------------------
+  # OneDrive
+  # ------------------------------------------------------------------------------
+  export ONE_DRIVE_TELEFONICA="$HOME/Library/CloudStorage/OneDrive-Telefonica"
+  export ONE_DRIVE_PERSONAL="$HOME/Library/CloudStorage/OneDrive-Personal"
 
-# ------------------------------------------------------------------------------
-# Telefonica tooling
-# ------------------------------------------------------------------------------
-export DEVTOOLS_PATH="$HOME/Projects/Telefonica/devtools"
-export TELEFONICA_CONFIG_PATH="$ONE_DRIVE_TELEFONICA/config"
+  # ------------------------------------------------------------------------------
+  # Telefonica tooling
+  # ------------------------------------------------------------------------------
+  export DEVTOOLS_PATH="$HOME/Projects/Telefonica/devtools"
+  export TELEFONICA_CONFIG_PATH="$ONE_DRIVE_TELEFONICA/config"
 
-# ------------------------------------------------------------------------------
-# Scripts environment variables
-# ------------------------------------------------------------------------------
-export AZURE_CONTEXTS="$TELEFONICA_CONFIG_PATH/azure-k8s-contexts"
+  # ------------------------------------------------------------------------------
+  # Scripts environment variables
+  # ------------------------------------------------------------------------------
+  export AZURE_CONTEXTS="$TELEFONICA_CONFIG_PATH/azure-k8s-contexts"
+fi
 
 # ------------------------------------------------------------------------------
 # Path - The higher it is, the more priority it has
@@ -69,13 +67,9 @@ path=(
 	"$DOTLY_PATH/bin"
 	"$DOTFILES_PATH/bin"
 	"$JAVA_HOME/bin"
-	"$GEM_HOME/bin"
-	"$GOPATH/bin"
 	"$HOME/Library/Application Support/JetBrains/Toolbox/scripts"
 	"$HOME/.local/bin"
 	"$HOME/.cargo/bin"
-	"/usr/local/opt/ruby/bin"
-	"/usr/local/opt/python/libexec/bin"
 	"/opt/homebrew/bin"
 	"/usr/local/bin"
 	"/usr/local/sbin"
@@ -105,3 +99,9 @@ export fpath
 # ------------------------------------------------------------------------------
 export EDITOR="nvim"
 export VISUAL="nvim"
+
+# WSL2 clipboard integration
+if grep -qi microsoft /proc/version 2>/dev/null; then
+  alias pbcopy='clip.exe'
+  alias pbpaste='powershell.exe -command "Get-Clipboard"'
+fi
