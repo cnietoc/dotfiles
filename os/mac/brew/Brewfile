@@ -139,6 +139,7 @@ brew "watch"
 brew "wget"
 brew "yq"
 brew "yt-dlp"
+brew "zoxide"
 brew "zsh"
 brew "anomalyco/tap/opencode"
 brew "azure/kubelogin/kubelogin"
@@ -197,4 +198,3 @@ mas "Pages", id: 409201541
 mas "RunCat", id: 1429033973
 mas "Steam Link", id: 1246969117
 mas "The Unarchiver", id: 425424353
-uv "poetry"

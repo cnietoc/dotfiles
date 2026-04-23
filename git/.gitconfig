@@ -1,19 +1,64 @@
 [user]
 	email = carlos.nietodelacuesta@telefonica.com
 	name = Carlos Nieto
+
 [credential]
-        helper = cache --timeout 604800
-[alias]
-	st = status
-	c = !git add -A && git commit
+	helper = cache --timeout 604800
+
 [core]
 	excludefile = $HOME/.gitignore_global
+	pager = delta
+
+[interactive]
+	diffFilter = delta --color-only
+
+[delta]
+	navigate = true
+	line-numbers = true
+	syntax-theme = Catppuccin-Mocha
+
 [init]
 	defaultBranch = main
+
+[push]
+	autoSetupRemote = true
+
+[pull]
+	rebase = true
+
+[rebase]
+	autoStash = true
+
+[rerere]
+	enabled = true
+
+[fetch]
+	prune = true
+
+[branch]
+	sort = -committerdate
+
+[column]
+	ui = auto
+
+[merge]
+	conflictstyle = zdiff3
+
+[diff]
+	algorithm = histogram
+	colorMoved = default
+
 [filter "lfs"]
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
 	required = true
-[push]
-	autoSetupRemote = true
+
+[alias]
+	st = status
+	c = !git add -A && git commit
+	lg = log --oneline --graph --decorate --all
+	undo = reset HEAD~1 --mixed
+	amend = commit --amend --no-edit
+	wip = !git add -A && git commit -m 'wip'
+	unwip = reset HEAD~1 --mixed

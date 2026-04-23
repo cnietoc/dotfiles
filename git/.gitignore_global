@@ -1,2 +1,41 @@
+# macOS
 .DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# JetBrains IDEs
+.idea/
 *.iml
+*.iws
+*.ipr
+
+# VSCode
+.vscode/
+*.code-workspace
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+venv/
+*.egg-info/
+dist/
+.pytest_cache/
+
+# Node
+node_modules/
+npm-debug.log*
+.npm/
+
+# Vim/Neovim
+*.swp
+*.swo
+.netrwhist
+
+# General
+Thumbs.db
+*.log
+.env
+.env.local

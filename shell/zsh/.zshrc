@@ -65,3 +65,5 @@ fi
 # Added by ToolHive UI - do not modify this block
 export PATH="$HOME/.toolhive/bin:$PATH"
 # End ToolHive UI
+
+eval "$(zoxide init zsh)"
