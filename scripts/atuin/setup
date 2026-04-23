@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+source "$DOTLY_PATH/scripts/core/_main.sh"
+
+##? Login to atuin sync using credentials from Bitwarden and sync history.
+##? Run this once on each new machine after installing atuin.
+##?
+##? Usage:
+##?   setup
+docs::parse "$@"
+
+if [[ -z "${BW_SESSION:-}" ]]; then
+  BW_STATUS=$(bw status | jq -r .status)
+  case "$BW_STATUS" in
+    "unauthenticated") export BW_SESSION=$(bw login --raw) ;;
+    "locked")         export BW_SESSION=$(bw unlock --raw) ;;
+    "unlocked")       ;;
+    *) echo "Unknown BW status: $BW_STATUS" >&2; exit 1 ;;
+  esac
+fi
+
+BW_ITEM=$(bw get item "hub.atuin.sh" --session "$BW_SESSION")
+
+ATUIN_USERNAME=$(echo "$BW_ITEM" | jq -r '.login.username')
+ATUIN_PASSWORD=$(echo "$BW_ITEM" | jq -r '.login.password')
+ATUIN_EMAIL=$(echo "$BW_ITEM" | jq -r '.fields[] | select(.name == "email") | .value')
+
+echo "Logging into atuin as $ATUIN_USERNAME..."
+atuin login -u "$ATUIN_USERNAME" -e "$ATUIN_EMAIL" -p "$ATUIN_PASSWORD"
+
+echo "Syncing history..."
+atuin sync
+
+echo "Done. Run 'atuin import zsh' if this is the first machine."
