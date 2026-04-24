@@ -68,3 +68,4 @@ export PATH="$HOME/.toolhive/bin:$PATH"
 
 eval "$(zoxide init zsh)"
 eval "$(atuin init zsh)"
+source <(fzf --zsh)
