@@ -53,9 +53,9 @@ while IFS= read -r line; do
   if [[ "$current_tenant" == "$tenant_id" ]]; then
     echo "Already authenticated in Azure with the tenant $tenant_id. Skipping..."
   else
-    az login --tenant $tenant_id
+    az login --tenant "$tenant_id"
   fi
 
-  az aks get-credentials --resource-group $resource_group --name $cluster_name --subscription $subscription_id --context $context_name --overwrite-existing
-  kubectl config set-context $context_name --namespace=$namespace
-done < $AZURE_CONTEXTS
+  az aks get-credentials --resource-group "$resource_group" --name "$cluster_name" --subscription "$subscription_id" --context "$context_name" --overwrite-existing
+  kubectl config set-context "$context_name" --namespace="$namespace"
+done < "$AZURE_CONTEXTS"

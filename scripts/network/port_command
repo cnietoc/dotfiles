@@ -12,4 +12,4 @@ source "$DOTLY_PATH/scripts/core/_main.sh"
 ##?   port_command
 docs::parse "$@"
 
-sudo lsof -iTCP -sTCP:LISTEN -n -P | awk 'NR>1 {print $9, $1, $2}' | sed 's/.*://' | sort -nu | while read port process pid; do echo "Port $port: $(ps -p $pid -o command= | sed 's/^-//') (PID: $pid)"; done
+sudo lsof -iTCP -sTCP:LISTEN -n -P | awk 'NR>1 {print $9, $1, $2}' | sed 's/.*://' | sort -nu | while read -r port _ pid; do echo "Port $port: $(ps -p "$pid" -o command= | sed 's/^-//') (PID: $pid)"; done

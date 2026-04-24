@@ -10,4 +10,4 @@ source "$DOTLY_PATH/scripts/core/_main.sh"
 ##?    delete-merged-branches
 docs::parse "$@"
 
-git branch --merged | egrep -v "(^\*|master|main|dev)" | xargs git branch -d
+git branch --merged | grep -Ev "(^\*|master|main|dev)" | xargs git branch -d

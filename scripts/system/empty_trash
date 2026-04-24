@@ -17,7 +17,10 @@ free_space_in_home() {
 
 free_space_before_empty=$(free_space_in_home)
 
-ls /Volumes | grep -v GoogleDrive | xargs -I_ sudo rm -rfv /Volumes/_/.Trashes
+for vol in /Volumes/*/; do
+  [[ "$vol" == *GoogleDrive* ]] && continue
+  sudo rm -rfv "${vol}.Trashes"
+done
 sudo rm -rfv ~/.Trash/*
 echo '🗑   All trashes empty'
 

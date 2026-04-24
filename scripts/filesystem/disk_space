@@ -53,7 +53,6 @@ while true; do
   fi
 
   # Calcular el espacio usado y libre en porcentaje
-  used_space=$(echo "$total_space - $free_space" | bc)
   free_percentage=$(echo "($free_space / $total_space) * 100" | bc -l | awk '{printf "%.0f", $0}')
   usage_percentage=$((100 - free_percentage))
 

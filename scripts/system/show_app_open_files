@@ -15,10 +15,11 @@ source "$DOTLY_PATH/scripts/core/_main.sh"
 ##?   -h --help   Show this screen.
 ##?   -w --watch  Watch the changes
 docs::parse "$@"
+watch="${watch:-false}"
 
 selected=$(dot system list_opened_apps | fzf)
 
-if $watch; then
+if "$watch"; then
 	lsof -r 2 -c "$selected" | awk '{print $4 " " $9}'
 else
 	lsof -c "$selected" | awk '{print $4 " " $9}'

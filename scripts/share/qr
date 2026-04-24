@@ -13,5 +13,6 @@ source "$DOTLY_PATH/scripts/core/_main.sh"
 ##? Examples:
 ##?   qr foo
 docs::parse "$@"
+contents="${contents:-}"
 
 echo "$contents" | curl -F-=\<- qrenco.de

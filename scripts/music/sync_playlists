@@ -18,6 +18,10 @@ load_secrets spotify
 ##?   -n --normalize   Normalizes the cover images
 docs::parse "$@"
 
+# Set by docs::parse from --default / --normalize flags
+default="${default:-false}"
+normalize="${normalize:-false}"
+
 declare -A extra_playlists=(
     #["La Mazdalista"]="https://open.spotify.com/playlist/2sDXWUw7DYIATBu8wIlkOB?si=9178b8524de64394"
 )
@@ -145,11 +149,8 @@ if [[ ! -f "$TOKEN_FILE" ]]; then
   exchange_code_for_tokens
 fi
 
-if ! $default; then
-  client_params="--client-id $SPOTIFY_CLIENT_ID --client-secret $SPOTIFY_CLIENT_SECRET"
-else
+if "$default"; then
   echo "Using default client id and secret"
-  client_params=""
 fi
 
 rm -rf ~/.spotdl
@@ -209,7 +210,7 @@ fi
 echo "Sincronizando las playlists:"
 playlists_size=$(echo "$selected_playlists" | wc -l | xargs)
 echo "$selected_playlists" | while read -r playlist; do
-  name=$(echo "$playlist" | sed 's/ \S*$//')
+  name="${playlist% *}"
   echo "- $name"
 done
 

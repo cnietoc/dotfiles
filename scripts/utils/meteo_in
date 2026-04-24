@@ -11,4 +11,4 @@ source "$DOTLY_PATH/scripts/core/_main.sh"
 ##?   meteo_in <city>
 docs::parse "$@"
 
-curl -4 http://wttr.in/$1
+curl -4 "http://wttr.in/$1"

@@ -9,6 +9,7 @@ source "$DOTLY_PATH/scripts/core/_main.sh"
 ##?   to-gif <video_path>
 ##?
 docs::parse "$@"
+video_path="${video_path:-}"
 
 ffmpeg \
 	-i "$video_path" \

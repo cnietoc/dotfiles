@@ -7,6 +7,17 @@ repos:
     rev: v0.10.0.1
     hooks:
       - id: shellcheck
+        files: ^(scripts|restoration_scripts)/
+        args: [--shell=bash, --exclude=SC1091]
+
+  - repo: local
+    hooks:
+      - id: zsh-syntax-check
+        name: zsh syntax check
+        language: system
+        entry: zsh -n
+        files: ^shell/.*\.sh$
+        types: [file]
   - repo: https://github.com/scop/pre-commit-shfmt
     rev: v3.13.1-1
     hooks:
