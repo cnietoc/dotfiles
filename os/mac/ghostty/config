@@ -2,9 +2,6 @@
 font-family = FiraCode Nerd Font
 font-size = 16
 
-# Theme — Catppuccin Mocha (built-in, no install needed)
-theme = catppuccin-mocha
-
 # Cursor
 cursor-style = block
 
@@ -22,7 +19,7 @@ copy-on-select = true
 
 # Quick Terminal (Ctrl+` toggles a dropdown terminal from any app)
 quick-terminal-position = top
-quick-terminal-size = 40
+quick-terminal-size = 40%
 quick-terminal-screen = main
 quick-terminal-animation-duration = 0.2
 keybind = global:ctrl+grave_accent=toggle_quick_terminal
