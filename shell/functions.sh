@@ -59,7 +59,7 @@ function load_secrets() {
                 export NOTION_DHCP_DATASOURCE=$(bw get notes notion-api --session "$BW_SESSION")
                 ;;
             router)
-                export ROUTER_IP=$(bw get uris router-home --session "$BW_SESSION")
+                export ROUTER_IP=$(bw get uri router-home --session "$BW_SESSION")
                 export ROUTER_USER=$(bw get username router-home --session "$BW_SESSION")
                 export ROUTER_PASS=$(bw get password router-home --session "$BW_SESSION")
                 ;;
