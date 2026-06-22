@@ -1,190 +1,379 @@
 tap "anomalyco/tap"
 tap "azure/kubelogin"
 tap "denisidoro/tools"
-tap "gromgit/fuse"
-tap "pear-devs/pear"
+# Run your GitHub Actions locally
 brew "act"
+# Tool to validate GitHub Action and Workflow YAML files
 brew "action-validator"
-brew "imath"
-brew "lz4"
-brew "little-cms2"
-brew "openexr"
-brew "jpeg-xl"
+# Codec library for encoding and decoding AV1 video streams
 brew "aom"
+# Apache Portable Runtime library
 brew "apr"
+# Mozilla CA certificate store
 brew "ca-certificates"
+# Cryptography and SSL/TLS Toolkit
 brew "openssl@3"
+# Companion library to apr, the Apache Portable Runtime library
 brew "apr-util"
+# Asynchronous DNS library
 brew "c-ares"
+# GNU internationalization (i18n) and localization (l10n) library
 brew "gettext"
+# C library implementing the SSH2 protocol
 brew "libssh2"
+# Download with resuming and segmented downloading
 brew "aria2"
-brew "python@3.13"
+# Improved shell history for zsh, bash, fish and nushell
 brew "atuin"
+# Interpreted, interactive, object-oriented programming language
+brew "python@3.13"
+# Microsoft Azure CLI 2.0
 brew "azure-cli"
+# Bourne-Again SHell, a UNIX command interpreter
 brew "bash"
+# C library of Git core methods that is re-entrant and linkable
 brew "libgit2"
+# Clone of cat(1) with syntax highlighting and Git integration
 brew "bat"
+# HTTP/2 C Library
 brew "libnghttp2"
+# Multi-platform support library with a focus on asynchronous I/O
 brew "libuv"
+# Extremely Fast Compression algorithm
+brew "lz4"
+# Open-source, cross-platform JavaScript runtime environment
+brew "node"
+# Secure and free password manager for all of your devices
 brew "bitwarden-cli"
+# Resource monitor. C++ version and continuation of bashtop and bpytop
 brew "btop"
+# Software library to render fonts
 brew "freetype"
+# XML-based font configuration API for X Windows
 brew "fontconfig"
+# Core application library for C
 brew "glib"
+# X.Org: Core X11 protocol client library
 brew "libx11"
+# X.Org: Library for common extensions to the X11 protocol
 brew "libxext"
+# Vector graphics library with cross-device output support
 brew "cairo"
+# Multi-platform, multi-architecture disassembly framework
 brew "capstone"
+# CLI tool for analyzing Claude Code usage from local JSONL files
+brew "ccusage"
+# Mozilla CA bundle for Python
 brew "certifi"
+# AV1 decoder targeted to be small and fast
 brew "dav1d"
+# Implementation of the Unicode BiDi algorithm
 brew "fribidi"
+# OpenType text shaping engine
 brew "harfbuzz"
+# Library of 2D and 3D vector, matrix, and math operations
+brew "imath"
+# Color management engine supporting ICC profiles
+brew "little-cms2"
+# High dynamic-range image file format
+brew "openexr"
+# New file format for still image compression
+brew "jpeg-xl"
+# Library for encoding and decoding .avif files
 brew "libavif"
+# Versatile and fast Unicode/ASCII/ANSI graphics renderer
 brew "chafa"
+# Human-friendly and fast alternative to cut and (sometimes) awk
 brew "choose-rust"
+# Console Matrix
 brew "cmatrix"
+# Generic library support script
 brew "libtool"
+# Libraries to talk to Microsoft SQL Server and Sybase databases
 brew "freetds"
+# Graphics library to dynamically manipulate images
 brew "gd"
+# Network authentication protocol
 brew "krb5"
+# General-purpose scripting language
 brew "php"
+# Dependency Manager for PHP
 brew "composer"
+# GNU File, Shell, and Text utilities
 brew "coreutils"
+# Top-like interface for container metrics
 brew "ctop"
+# Tool for exploring each layer in a docker image
 brew "dive"
+# Device tree compiler
 brew "dtc"
+# Modern, maintained replacement for ls
 brew "eza"
-brew "fastfetch"
-brew "fd"
-brew "opus"
-brew "sdl2"
-brew "svt-av1"
-brew "ffmpeg"
-brew "ffmpegthumbnailer"
-brew "findutils"
-brew "fzf"
-brew "isl"
-brew "gcc"
-brew "gh"
-brew "git"
-brew "git-delta"
-brew "git-extras"
-brew "git-lfs"
-brew "gnu-sed"
-brew "libidn2"
-brew "p11-kit"
-brew "unbound"
-brew "helm"
-brew "helmfile"
-brew "hyperfine"
-brew "ice"
-brew "icu4c@77"
-brew "id3lib"
-brew "id3v2"
-brew "imagemagick"
-brew "inetutils"
-brew "iperf3"
-brew "jq"
-brew "k9s"
-brew "kubectx"
-brew "kubernetes-cli"
-brew "lazygit"
-brew "leptonica"
-brew "libass"
-brew "librist"
-brew "libssh"
-brew "llmfit"
-brew "z3"
-brew "llvm"
-brew "lsd"
+# Powerful, lightweight programming language
 brew "lua"
+# Like neofetch, but much faster because written mostly in C
+brew "fastfetch"
+# Simple, fast and user-friendly alternative to find
+brew "fd"
+# Audio codec
+brew "opus"
+# Low-level access to audio, keyboard, mouse, joystick, and graphics
+brew "sdl2"
+# AV1 encoder
+brew "svt-av1"
+# Play, record, convert, and stream select audio and video codecs
+brew "ffmpeg"
+# Create thumbnails for your video files
+brew "ffmpegthumbnailer"
+# Collection of GNU find, xargs, and locate
+brew "findutils"
+# Command-line fuzzy finder written in Go
+brew "fzf"
+# Integer Set Library for the polyhedral model
+brew "isl"
+# GNU compiler collection
+brew "gcc"
+# GitHub command-line tool
+brew "gh"
+# Distributed revision control system
+brew "git"
+# Syntax-highlighting pager for git and diff output
+brew "git-delta"
+# Small git utilities
+brew "git-extras"
+# Git extension for versioning large files
+brew "git-lfs"
+# GNU implementation of the famous stream editor
+brew "gnu-sed"
+# International domain name library (IDNA2008, Punycode and TR46)
+brew "libidn2"
+# Library to load and enumerate PKCS#11 modules
+brew "p11-kit"
+# Validating, recursive, caching DNS resolver
+brew "unbound"
+# Kubernetes package manager
+brew "helm"
+# Deploy Kubernetes Helm Charts
+brew "helmfile"
+# Command-line benchmarking tool
+brew "hyperfine"
+# Comprehensive RPC framework
+brew "ice"
+# ID3 tag manipulation
+brew "id3lib"
+# Command-line editor
+brew "id3v2"
+# Tools and libraries to manipulate images in select formats
+brew "imagemagick"
+# GNU utilities for networking
+brew "inetutils"
+# Update of iperf: measures TCP, UDP, and SCTP bandwidth
+brew "iperf3"
+# Lightweight and flexible command-line JSON processor
+brew "jq"
+# Kubernetes CLI To Manage Your Clusters In Style!
+brew "k9s"
+# Tool that can switch between kubectl contexts easily and create aliases
+brew "kubectx"
+# Kubernetes command-line interface
+brew "kubernetes-cli"
+# Simple terminal UI for git commands
+brew "lazygit"
+# Image processing and image analysis library
+brew "leptonica"
+# Subtitle renderer for the ASS/SSA subtitle format
+brew "libass"
+# Reliable Internet Stream Transport (RIST)
+brew "librist"
+# C library SSHv1/SSHv2 client and server protocols
+brew "libssh"
+# Find what models run on your hardware
+brew "llmfit"
+# High-performance theorem prover
+brew "z3"
+# Next-gen compiler infrastructure
+brew "llvm"
+# Clone of ls with colorful output, file type icons, and more
+brew "lsd"
+# Utility for directing compilation
 brew "make"
+# Mac App Store command-line interface
 brew "mas"
+# Cryptographic & SSL/TLS library
 brew "mbedtls"
+# High performance, distributed memory object caching system
 brew "memcached"
+# UPnP IGD client library and daemon
 brew "miniupnpc"
+# Polyglot runtime manager (asdf rust clone)
 brew "mise"
+# Deep clean and optimize your Mac
 brew "mole"
+# MP3 player for Linux and UNIX
 brew "mpg123"
+# Open source relational database management system
 brew "mysql"
+# NCurses Disk Usage
 brew "ncdu"
-brew "neovim"
-brew "nmap"
-brew "pipenv"
-brew "pipx"
-brew "pkgconf"
-brew "poppler"
-brew "pre-commit"
-brew "pv"
-brew "python-packaging"
-brew "qemu"
-brew "rclone"
-brew "ripgrep"
-brew "rtk"
-brew "shellcheck"
-brew "shfmt"
-brew "skills"
-brew "speedtest-cli"
-brew "srt"
-brew "starship"
-brew "streamlink"
-brew "tealdeer"
-brew "tesseract"
-brew "tmux"
-brew "topgrade"
-brew "transmission-cli"
-brew "tree"
+# Incremental parsing library
 brew "tree-sitter"
+# Ambitious Vim-fork focused on extensibility and agility
+brew "neovim"
+# Port scanning utility for large networks
+brew "nmap"
+# Manage multiple Node.js versions
+brew "nvm"
+# Python dependency management tool
+brew "pipenv"
+# Execute binaries from Python packages in isolated environments
+brew "pipx"
+# Package compiler and linker metadata toolkit
+brew "pkgconf"
+# PDF rendering library (based on the xpdf-3.0 code base)
+brew "poppler"
+# Framework for managing multi-language pre-commit hooks
+brew "pre-commit"
+# Monitor data's progress through a pipe
+brew "pv"
+# Core utilities for Python packages
+brew "python-packaging"
+# Interpreted, interactive, object-oriented programming language
+brew "python@3.11"
+# Interpreted, interactive, object-oriented programming language
+brew "python@3.12"
+# Generic machine emulator and virtualizer
+brew "qemu"
+# Rsync for cloud storage
+brew "rclone"
+# Search tool like grep and The Silver Searcher
+brew "ripgrep"
+# CLI proxy to minimize LLM token consumption
+brew "rtk"
+# Safe, concurrent, practical language
+brew "rust"
+# Static analysis and lint tool, for (ba)sh scripts
+brew "shellcheck"
+# Autoformat shell script source code
+brew "shfmt"
+# Open agent skills ecosystem
+brew "skills"
+# Editor of encrypted files
+brew "sops"
+# Secure Reliable Transport
+brew "srt"
+# Cross-shell prompt for astronauts
+brew "starship"
+# CLI for extracting streams from various websites to a video player
+brew "streamlink"
+# Very fast implementation of tldr in Rust
+brew "tealdeer"
+# OCR (Optical Character Recognition) engine
+brew "tesseract"
+# Terminal multiplexer
+brew "tmux"
+# Upgrade all the things
+brew "topgrade"
+# Lightweight BitTorrent client
+brew "transmission-cli"
+# Display directories as trees (with optional color/HTML output)
+brew "tree"
+# Executes a program periodically, showing output fullscreen
 brew "watch"
+# Internet file retriever
 brew "wget"
+# Process YAML, JSON, XML, CSV and properties documents from the CLI
 brew "yq"
+# Feature-rich command-line audio/video downloader
 brew "yt-dlp"
+# Shell extension to navigate your filesystem faster
 brew "zoxide"
+# UNIX shell (command interpreter)
 brew "zsh"
-brew "anomalyco/tap/opencode"
-brew "azure/kubelogin/kubelogin"
-brew "denisidoro/tools/docpars"
-brew "gromgit/fuse/sshfs-mac"
+# The AI coding agent built for the terminal.
+brew "anomalyco/tap/opencode", trusted: true
+# A Kubernetes credential (exec) plugin implementing azure authentication
+brew "azure/kubelogin/kubelogin", trusted: true
+# Ultra-fast parser for declarative command-line options for your shell scripts.
+brew "denisidoro/tools/docpars", trusted: true
+# Image editing and design software
 cask "affinity"
+# Agent orchestration platform
 cask "antigravity"
+# Open-source project and knowledge management tool
 cask "appflowy"
+# Chromium based browser
 cask "arc"
-cask "autofirma"
+# Anthropic's official Claude AI desktop app
 cask "claude"
+# Terminal-based AI coding assistant
 cask "claude-code@latest"
+# OpenAI's coding agent that runs in your terminal
 cask "codex"
+# Brings the power of Copilot coding agent directly to your terminal
 cask "copilot-cli@prerelease"
+# Browser for SQLite databases
 cask "db-browser-for-sqlite"
+# Voice and text chat software
 cask "discord"
+# App to build and share containerised applications and microservices
 cask "docker-desktop"
+# Assign keys, and then decorate and label them
+cask "elgato-stream-deck"
+# Launcher for *Epic Games* games
 cask "epic-games"
 cask "font-fira-code-nerd-font"
 cask "font-hack-nerd-font"
+# Tool to measure the computer system's performance
 cask "geekbench"
+# Terminal emulator that uses platform-native UI and GPU acceleration
 cask "ghostty"
+# Free and open-source image editor
+cask "gimp"
+# Web browser
 cask "google-chrome"
+# Open source API development ecosystem
 cask "hoppscotch"
+# HTTP client from JetBrains IDEs available as a standalone CLI tool
 cask "ijhttp"
+# JetBrains tools manager
 cask "jetbrains-toolbox"
-cask "macfuse"
+# Support for Logitech G gear
+cask "logitech-g-hub"
+# Provides updates to various Microsoft products
 cask "microsoft-auto-update"
+# Meet, chat, call, and collaborate in just one place
 cask "microsoft-teams"
+# Visual tool to design, develop and administer MySQL servers
 cask "mysqlworkbench"
+# App to write, plan, collaborate, and get organised
 cask "notion"
+# Cloud gaming platform
 cask "nvidia-geforce-now"
+# Open-source software for live streaming and screen recording
+cask "obs"
+# Knowledge base that works on top of a local folder of plain text Markdown files
+cask "obsidian"
+# Get up and running with large language models locally
 cask "ollama-app"
+# AI coding agent desktop client
 cask "opencode-desktop"
-cask "pear-devs/pear/pear-desktop"
+# Collaboration platform for API development
 cask "postman"
+# Control your tools with a few keystrokes
 cask "raycast"
+# Music streaming service
 cask "spotify"
+# Video game digital distribution service
 cask "steam"
-cask "streamlink-twitch-gui"
+# Desktop client for Telegram messenger
 cask "telegram-desktop"
+# Web browser focusing on security
 cask "tor-browser"
+# Free and open-source OpenVPN client
 cask "tunnelblick"
+# Multimedia player
 cask "vlc"
+# Native desktop client for WhatsApp
 cask "whatsapp"
 mas "Amphetamine", id: 937984704
 mas "Bitwarden", id: 1352778147
@@ -198,3 +387,5 @@ mas "Pages", id: 409201541
 mas "RunCat", id: 1429033973
 mas "Steam Link", id: 1246969117
 mas "The Unarchiver", id: 425424353
+uv "poetry"
+npm "corepack"
