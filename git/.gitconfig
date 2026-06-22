@@ -62,3 +62,5 @@
 	amend = commit --amend --no-edit
 	wip = !git add -A && git commit -m 'wip'
 	unwip = reset HEAD~1 --mixed
+[url "git@github.com:"]
+	insteadOf = https://github.com/
