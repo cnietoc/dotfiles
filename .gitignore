@@ -8,3 +8,4 @@ shell/zsh/.zim
 shell/zsh/**/**.zwc
 shell/zsh/**/**.zwc.old
 **/.venv/
+**/__pycache__/
