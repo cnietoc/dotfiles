@@ -81,7 +81,8 @@ def execute_command_on_router(device_str):
     try:
         # Conectar al router
         ssh = paramiko.SSHClient()
-        ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+        ssh.load_system_host_keys()
+        ssh.set_missing_host_key_policy(paramiko.RejectPolicy())
         ssh.connect(ROUTER_IP, username=ROUTER_USER, password=ROUTER_PASS)
 
         # Ejecutar comando
