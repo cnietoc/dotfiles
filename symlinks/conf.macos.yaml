@@ -12,6 +12,7 @@
     ~/.dotly: os/mac/.dotly
     ~/.config/ghostty: os/mac/ghostty
     ~/.config/topgrade.toml: os/mac/topgrade/topgrade.toml
+    ~/.config/karabiner: os/mac/karabiner
     ~/bin/bash: /opt/homebrew/bin/bash
     ~/bin/date: /opt/homebrew/bin/gdate
     ~/bin/find: /opt/homebrew/bin/gfind

@@ -33,9 +33,9 @@ macOS Intel is **not supported**.
 
 | Path | Purpose |
 |---|---|
-| `shell/` | zsh config, functions, aliases, exports |
+| `shell/` | zsh config, functions, aliases, exports — includes `shell/btop/`, `shell/thefuck/`, `shell/atuin/config.toml`, `shell/bat/`, `shell/fastfetch/`, `shell/starship/` |
 | `git/` | `.gitconfig`, `.gitignore_global` + `git/gh/` (GitHub CLI) |
-| `os/mac/` | Brewfile, Ghostty, topgrade (`topgrade.toml` + `topgrade.d/`), macOS defaults snapshot |
+| `os/mac/` | Brewfile, Ghostty, topgrade (`topgrade.toml` + `topgrade.d/`), Karabiner (`os/mac/karabiner/`), macOS defaults snapshot |
 | `os/linux/` | apt packages script, Linux-specific setup |
 | `scripts/` | personal utility scripts |
 | `editors/nvim/` | LazyVim starter config |
