@@ -4,7 +4,7 @@ Secrets are never stored in plaintext. They are loaded on demand from Bitwarden 
 
 | Location | Bitwarden item | Env vars / notes |
 |---|---|---|
-| `~/.config/gh/hosts.yml` (GitHub token) | `github-cli` (placeholder) | `gh auth login` or `gh auth token`; token stored in Bitwarden, not in repo. Template at `git/gh/hosts.yml.template` |
+| `~/.config/gh/hosts.yml` (GitHub token) | `github-cli` (placeholder) | `gh auth login` or `gh auth token`; token stored in Bitwarden, not in repo. |
 | `~/.aws/*` (AWS credentials/SSO) | `aws` (placeholder) | `AWS_ACCESS_KEY_ID` / `AWS_SECRET_ACCESS_KEY` via `aws sso login` |
 | `~/.ssh/id_*` (SSH private keys) | `ssh-keys` (placeholder) | Never commit; permissions 600. Restore manually or via Bitwarden Secure Note |
 | `~/.gnupg/*` | `gnupg` (placeholder) | Never commit |

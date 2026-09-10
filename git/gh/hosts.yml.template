@@ -1,5 +1,0 @@
-# Copy to ~/.config/gh/hosts.yml via `gh auth login`
-# github.com:
-#   oauth_token: YOUR_TOKEN_HERE
-#   user: YOUR_USERNAME
-#   git_protocol: ssh
