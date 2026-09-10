@@ -4,7 +4,7 @@ location,kind,managed,target,size_kb,suggested_action,decision
 ~/.config/atuin,dir,False,,14,triage,version
 ~/.config/bat,dir,True,,0,keep-managed,keep-managed
 ~/.config/browser-harness,dir,False,,98,triage,ignore
-~/.config/btop,symlink->dotfiles,True,/Users/cx02243/.dotfiles/btop,9,keep-managed,keep-managed
+~/.config/btop,symlink->dotfiles,True,/Users/cx02243/.dotfiles/shell/btop,9,keep-managed,keep-managed
 ~/.config/cagent,dir,False,,0,triage,ignore
 ~/.config/claude-usage-bar,dir,False,,0,triage,secrets
 ~/.config/cmux,dir,False,,14,triage,ignore
@@ -20,7 +20,7 @@ location,kind,managed,target,size_kb,suggested_action,decision
 ~/.config/helm,dir,False,,0,ignore,ignore
 ~/.config/iterm2,dir,False,,0,ignore,ignore
 ~/.config/jgit,dir,False,,2,ignore,ignore
-~/.config/karabiner,symlink->dotfiles,True,/Users/cx02243/.dotfiles/karabiner,11,keep-managed,keep-managed
+~/.config/karabiner,symlink->dotfiles,True,/Users/cx02243/.dotfiles/os/mac/karabiner,11,keep-managed,keep-managed
 ~/.config/llmfit,dir,False,,76,triage,ignore
 ~/.config/mise,symlink->dotfiles,True,/Users/cx02243/.dotfiles/langs/mise,0,keep-managed,keep-managed
 ~/.config/mole,dir,False,,1277,triage,ignore
@@ -29,8 +29,8 @@ location,kind,managed,target,size_kb,suggested_action,decision
 ~/.config/raycast,dir,False,,340816,triage,ignore
 ~/.config/rclone,dir,False,,0,ignore,ignore
 ~/.config/starship.toml,symlink->dotfiles,True,/Users/cx02243/.dotfiles/shell/starship/starship.toml,0,keep-managed,keep-managed
-~/.config/thefuck,symlink->dotfiles,True,/Users/cx02243/.dotfiles/thefuck,0,keep-managed,keep-managed
-~/.config/topgrade.d,symlink->dotfiles,True,/Users/cx02243/.dotfiles/topgrade/topgrade.d,0,keep-managed,keep-managed
+~/.config/thefuck,symlink->dotfiles,True,/Users/cx02243/.dotfiles/shell/thefuck,0,keep-managed,keep-managed
+~/.config/topgrade.d,symlink->dotfiles,True,/Users/cx02243/.dotfiles/os/mac/topgrade/topgrade.d,0,keep-managed,keep-managed
 ~/.config/topgrade.toml,symlink->dotfiles,True,/Users/cx02243/.dotfiles/os/mac/topgrade/topgrade.toml,0,keep-managed,keep-managed
 ~/.config/yarn,dir,False,,0,ignore,ignore
 ~/.config/yt-dlp,symlink->dotfiles,True,/Users/cx02243/.dotfiles/os/mac/yt-dlp,0,keep-managed,keep-managed

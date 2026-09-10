@@ -26,8 +26,8 @@
     ~/.config/starship.toml: shell/starship/starship.toml
     ~/.config/nvim: editors/nvim
     ~/.config/bat/config: shell/bat/config
-    ~/.config/btop: btop
-    ~/.config/thefuck: thefuck
-    ~/.config/atuin/config.toml: atuin/config.toml
-    ~/.config/gh/config.yml: gh/config.yml
-    ~/.config/topgrade.d: topgrade/topgrade.d
+    ~/.config/btop: shell/btop
+    ~/.config/thefuck: shell/thefuck
+    ~/.config/atuin/config.toml: shell/atuin/config.toml
+    ~/.config/gh/config.yml: git/gh/config.yml
+    ~/.config/topgrade.d: os/mac/topgrade/topgrade.d

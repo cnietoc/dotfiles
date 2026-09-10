@@ -6,12 +6,12 @@ Total rows: 66
 Managed now: 12 (was 7 before this PR)
 
 ## New links in this PR
-- `~/.config/btop` -> `btop/`
-- `~/.config/karabiner` -> `karabiner/` (macOS only, `conf.macos.yaml`)
-- `~/.config/thefuck` -> `thefuck/`
-- `~/.config/topgrade.d` -> `topgrade/topgrade.d/`
-- `~/.config/atuin/config.toml` -> `atuin/config.toml` (file-level, history.sqlite excluded)
-- `~/.config/gh/config.yml` -> `gh/config.yml` (hosts.yml excluded as secret, .gitignore **/hosts.yml)
+- `~/.config/btop` -> `shell/btop/`
+- `~/.config/karabiner` -> `os/mac/karabiner/` (macOS only, `conf.macos.yaml`)
+- `~/.config/thefuck` -> `shell/thefuck/`
+- `~/.config/topgrade.d` -> `os/mac/topgrade/topgrade.d/` (sibling of `topgrade.toml`)
+- `~/.config/atuin/config.toml` -> `shell/atuin/config.toml` (file-level, history.sqlite excluded)
+- `~/.config/gh/config.yml` -> `git/gh/config.yml` (hosts.yml excluded as secret, .gitignore **/hosts.yml)
 
 ## Decisions
 | location | kind | decision | managed |
@@ -80,9 +80,9 @@ Managed now: 12 (was 7 before this PR)
 - ignore: 43
 
 ## Secrets excluded
-- `~/.config/gh/hosts.yml` token excluded, template `gh/hosts.yml.template` tracked
+- `~/.config/gh/hosts.yml` token excluded, template `git/gh/hosts.yml.template` tracked
 - `~/.ssh`, `~/.aws`, `~/.gnupg`, `~/.docker`, `~/.git-credentials`, `~/.spotify_token.json`, `~/.claude` -> SECRETS-MAPPING.md
-- atuin key/session/history.sqlite excluded, only `atuin/config.toml` tracked
+- atuin key/session/history.sqlite excluded, only `shell/atuin/config.toml` tracked
 
 ## Verify secrets scan
 No secrets found in tracked files (grep -R token|password|secret|oauth|api_key|BEGIN PRIVATE returned no real secrets, only comments/placeholders)
