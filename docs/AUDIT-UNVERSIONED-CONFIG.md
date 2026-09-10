@@ -1,78 +1,88 @@
 # Audit: unversioned config vs dotbot manifest
 
-Generated: `audit_dotfiles.py` — manifest links: 26
+Generated: `audit_dotfiles.py` — manifest links: 32 (was 26, +6 new)
 
 Total rows: 66
+Managed now: 12 (was 7 before this PR)
+
+## New links in this PR
+- `~/.config/btop` -> `btop/`
+- `~/.config/karabiner` -> `karabiner/` (macOS only, `conf.macos.yaml`)
+- `~/.config/thefuck` -> `thefuck/`
+- `~/.config/topgrade.d` -> `topgrade/topgrade.d/`
+- `~/.config/atuin/config.toml` -> `atuin/config.toml` (file-level, history.sqlite excluded)
+- `~/.config/gh/config.yml` -> `gh/config.yml` (hosts.yml excluded as secret, .gitignore **/hosts.yml)
 
 ## Decisions
-| location | kind | size_kb | decision |
+| location | kind | decision | managed |
 |---|---|---|---|
-| ~/.config/Microsoft\VisualStudio Services | dir | 719 | ignore |
-| ~/.config/OpenRGB | dir | 66 | ignore |
-| ~/.config/atuin | dir | 14 | version |
-| ~/.config/browser-harness | dir | 98 | ignore |
-| ~/.config/btop | dir | 9 | version |
-| ~/.config/cagent | dir | 0 | ignore |
-| ~/.config/claude-usage-bar | dir | 0 | secrets |
-| ~/.config/cmux | dir | 14 | ignore |
-| ~/.config/codeburn | dir | 2 | ignore |
-| ~/.config/codexbar | dir | 4 | ignore |
-| ~/.config/configstore | dir | 0 | ignore |
-| ~/.config/containers | dir | 0 | ignore |
-| ~/.config/gh | dir | 0 | version-partial |
-| ~/.config/git | dir | 0 | version |
-| ~/.config/github-copilot | dir | 302003 | ignore |
-| ~/.config/helm | dir | 0 | version |
-| ~/.config/iterm2 | dir | 0 | version |
-| ~/.config/jgit | dir | 2 | version |
-| ~/.config/karabiner | dir | 11 | version |
-| ~/.config/llmfit | dir | 76 | ignore |
-| ~/.config/mole | dir | 1277 | ignore |
-| ~/.config/opencode | dir | 53563 | ignore |
-| ~/.config/raycast | dir | 340816 | ignore |
-| ~/.config/rclone | dir | 0 | version |
-| ~/.config/thefuck | dir | 0 | version |
-| ~/.config/topgrade.d | dir | 0 | version |
-| ~/.config/yarn | dir | 0 | version |
-| ~/.atuin | dir |  | ignore |
-| ~/.aws | dir |  | secrets |
-| ~/.bun | dir |  | ignore |
-| ~/.cargo | dir |  | ignore |
-| ~/.claude | dir |  | secrets |
-| ~/.codex | dir |  | ignore |
-| ~/.copilot | dir |  | ignore |
-| ~/.docker | dir |  | secrets |
-| ~/.gemini | dir |  | ignore |
-| ~/.git-credentials | file |  | secrets |
-| ~/.gitconfig.devtools | file |  | ignore |
-| ~/.gnupg | dir |  | secrets |
-| ~/.gradle | dir |  | ignore |
-| ~/.hushlogin | dir |  | ignore |
-| ~/.ivy2 | dir |  | ignore |
-| ~/.kube | dir |  | machine-specific |
-| ~/.local | dir |  | ignore |
-| ~/.m2 | dir |  | ignore |
-| ~/.npm | dir |  | ignore |
-| ~/.npmrc | file |  | ignore |
-| ~/.nvm | dir |  | ignore |
-| ~/.sbt | dir |  | ignore |
-| ~/.spotify_token.json | file |  | secrets |
-| ~/.ssh | dir |  | secrets |
-| ~/.toolhive | dir |  | ignore |
-| ~/.yarn | dir |  | ignore |
-| ~/.yarnrc | file |  | ignore |
-| ~/.z | file |  | ignore |
-| ~/.zcompdump | file |  | ignore |
-| ~/.zcompdump.zwc | file |  | ignore |
-| ~/.zsh_sessions | dir |  | ignore |
+| ~/.config/Microsoft\VisualStudio Services | dir | ignore | False |
+| ~/.config/OpenRGB | dir | ignore | False |
+| ~/.config/atuin | dir | version | False |
+| ~/.config/browser-harness | dir | ignore | False |
+| ~/.config/cagent | dir | ignore | False |
+| ~/.config/claude-usage-bar | dir | secrets | False |
+| ~/.config/cmux | dir | ignore | False |
+| ~/.config/codeburn | dir | ignore | False |
+| ~/.config/codexbar | dir | ignore | False |
+| ~/.config/configstore | dir | ignore | False |
+| ~/.config/containers | dir | ignore | False |
+| ~/.config/gh | dir | version-partial | False |
+| ~/.config/git | dir | ignore | False |
+| ~/.config/github-copilot | dir | ignore | False |
+| ~/.config/helm | dir | ignore | False |
+| ~/.config/iterm2 | dir | ignore | False |
+| ~/.config/jgit | dir | ignore | False |
+| ~/.config/llmfit | dir | ignore | False |
+| ~/.config/mole | dir | ignore | False |
+| ~/.config/opencode | dir | ignore | False |
+| ~/.config/raycast | dir | ignore | False |
+| ~/.config/rclone | dir | ignore | False |
+| ~/.config/yarn | dir | ignore | False |
+| ~/.atuin | dir | ignore | False |
+| ~/.aws | dir | secrets | False |
+| ~/.bun | dir | ignore | False |
+| ~/.cargo | dir | ignore | False |
+| ~/.claude | dir | secrets | False |
+| ~/.codex | dir | ignore | False |
+| ~/.copilot | dir | ignore | False |
+| ~/.docker | dir | secrets | False |
+| ~/.gemini | dir | ignore | False |
+| ~/.git-credentials | file | secrets | False |
+| ~/.gitconfig.devtools | file | ignore | False |
+| ~/.gnupg | dir | secrets | False |
+| ~/.gradle | dir | ignore | False |
+| ~/.hushlogin | dir | ignore | False |
+| ~/.ivy2 | dir | ignore | False |
+| ~/.kube | dir | machine-specific | False |
+| ~/.local | dir | ignore | False |
+| ~/.m2 | dir | ignore | False |
+| ~/.npm | dir | ignore | False |
+| ~/.npmrc | file | ignore | False |
+| ~/.nvm | dir | ignore | False |
+| ~/.sbt | dir | ignore | False |
+| ~/.spotify_token.json | file | secrets | False |
+| ~/.ssh | dir | secrets | False |
+| ~/.toolhive | dir | ignore | False |
+| ~/.yarn | dir | ignore | False |
+| ~/.yarnrc | file | ignore | False |
+| ~/.z | file | ignore | False |
+| ~/.zcompdump | file | ignore | False |
+| ~/.zcompdump.zwc | file | ignore | False |
+| ~/.zsh_sessions | dir | ignore | False |
 
 ## Summary
-- version: 11
+- managed (keep-managed): 12
+- version: 1 (atuin, gh remain as version/partial at dir level but linked file-level)
 - version-partial: 1
 - secrets: 8
 - machine-specific: 1
-- ignore: 37
-- keep-managed: 8
+- ignore: 43
 
-## Next
-Move version/version-partial configs into ~/.dotfiles/<topic>/ and add dotbot link: entries. Templates for machine-specific and secrets documented in SECRETS-MAPPING.md.
+## Secrets excluded
+- `~/.config/gh/hosts.yml` token excluded, template `gh/hosts.yml.template` tracked
+- `~/.ssh`, `~/.aws`, `~/.gnupg`, `~/.docker`, `~/.git-credentials`, `~/.spotify_token.json`, `~/.claude` -> SECRETS-MAPPING.md
+- atuin key/session/history.sqlite excluded, only `atuin/config.toml` tracked
+
+## Verify secrets scan
+No secrets found in tracked files (grep -R token|password|secret|oauth|api_key|BEGIN PRIVATE returned no real secrets, only comments/placeholders)

@@ -9,3 +9,21 @@ shell/zsh/**/**.zwc
 shell/zsh/**/**.zwc.old
 **/.venv/
 **/__pycache__/
+
+# Audit 2026-09-10: secrets / caches / machine-specific (never commit)
+docs/audit-unversioned-config.local.csv
+**/hosts.yml
+**/credentials.json
+**/history.sqlite*
+.ssh/id_*
+.aws/credentials
+.docker/config.json
+.gnupg/
+.kube/config
+.claude/.credentials.json
+**/node_modules/
+**/*.zwc
+**/*.log
+**/*.sock
+.config/browser-harness/runtime/
+.config/browser-harness/tmp/
