@@ -35,7 +35,7 @@ macOS Intel is **not supported**.
 |---|---|
 | `shell/` | zsh config, functions, aliases, exports |
 | `git/` | `.gitconfig`, `.gitignore_global` + `git/gh/` (GitHub CLI) |
-| `os/mac/` | Brewfile, Ghostty, topgrade (`topgrade.toml` + `topgrade.d/`), macOS defaults snapshot |
+| `os/mac/` | Brewfile, Ghostty, topgrade (`topgrade.toml`), macOS defaults snapshot |
 | `os/linux/` | apt packages script, Linux-specific setup |
 | `scripts/` | personal utility scripts |
 | `editors/nvim/` | LazyVim starter config |

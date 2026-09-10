@@ -27,4 +27,3 @@
     ~/.config/nvim: editors/nvim
     ~/.config/bat/config: shell/bat/config
     ~/.config/gh/config.yml: git/gh/config.yml
-    ~/.config/topgrade.d: os/mac/topgrade/topgrade.d
