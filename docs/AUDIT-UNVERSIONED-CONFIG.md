@@ -1,17 +1,15 @@
 # Audit: unversioned config vs dotbot manifest
 
-Generated: `audit_dotfiles.py` — manifest links: 32 (was 26, +6 new)
+Generated: `audit_dotfiles.py` — manifest links: 28
 
 Total rows: 66
-Managed now: 12 (was 7 before this PR)
+Managed now: 8
 
 ## New links in this PR
-- `~/.config/btop` -> `shell/btop/`
-- `~/.config/karabiner` -> `os/mac/karabiner/` (macOS only, `conf.macos.yaml`)
-- `~/.config/thefuck` -> `shell/thefuck/`
-- `~/.config/topgrade.d` -> `os/mac/topgrade/topgrade.d/` (sibling of `topgrade.toml`)
-- `~/.config/atuin/config.toml` -> `shell/atuin/config.toml` (file-level, history.sqlite excluded)
 - `~/.config/gh/config.yml` -> `git/gh/config.yml` (hosts.yml excluded as secret, .gitignore **/hosts.yml)
+- `~/.config/topgrade.d` -> `os/mac/topgrade/topgrade.d/` (sibling of `topgrade.toml`)
+
+Dropped from versioning (default configs): `btop`, `atuin`, `thefuck`, `karabiner` — kept live in `~/.config/*`, not tracked.
 
 ## Decisions
 | location | kind | decision | managed |
@@ -72,8 +70,8 @@ Managed now: 12 (was 7 before this PR)
 | ~/.zsh_sessions | dir | ignore | False |
 
 ## Summary
-- managed (keep-managed): 12
-- version: 1 (atuin, gh remain as version/partial at dir level but linked file-level)
+- managed (keep-managed): 8
+- version: 1 (gh: version-partial, linked file-level)
 - version-partial: 1
 - secrets: 8
 - machine-specific: 1
@@ -82,7 +80,6 @@ Managed now: 12 (was 7 before this PR)
 ## Secrets excluded
 - `~/.config/gh/hosts.yml` token excluded, template `git/gh/hosts.yml.template` tracked
 - `~/.ssh`, `~/.aws`, `~/.gnupg`, `~/.docker`, `~/.git-credentials`, `~/.spotify_token.json`, `~/.claude` -> SECRETS-MAPPING.md
-- atuin key/session/history.sqlite excluded, only `shell/atuin/config.toml` tracked
 
 ## Verify secrets scan
 No secrets found in tracked files (grep -R token|password|secret|oauth|api_key|BEGIN PRIVATE returned no real secrets, only comments/placeholders)
