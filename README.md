@@ -34,13 +34,13 @@ macOS Intel is **not supported**.
 | Path | Purpose |
 |---|---|
 | `shell/` | zsh config, functions, aliases, exports |
-| `git/` | `.gitconfig`, `.gitignore_global` |
-| `os/mac/` | Brewfile, Ghostty, topgrade, macOS defaults snapshot |
+| `git/` | `.gitconfig`, `.gitignore_global` + `git/gh/` (GitHub CLI) |
+| `os/mac/` | Brewfile, Ghostty, topgrade (`topgrade.toml`), macOS defaults snapshot |
 | `os/linux/` | apt packages script, Linux-specific setup |
 | `scripts/` | personal utility scripts |
 | `editors/nvim/` | LazyVim starter config |
 | `langs/mise/` | mise tool version config |
-| `symlinks/` | dotbot YAML configs |
+| `symlinks/` | dotbot YAML configs (`conf.yaml` + `conf.macos.yaml` + `conf.linux.yaml`) |
 | `modules/` | dotly and Zim submodules |
 
 ## Secrets (Bitwarden)

@@ -39,3 +39,8 @@ Thumbs.db
 *.log
 .env
 .env.local
+
+# from ~/.config/git/ignore (merged 2026-09-10)
+/*.iml
+
+**/.claude/settings.local.json
