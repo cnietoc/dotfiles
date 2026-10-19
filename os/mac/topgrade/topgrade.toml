@@ -356,7 +356,8 @@
 [containers]
 # Specify the containers to ignore while updating (Wildcard supported)
 # Ignore internal registry — images are frequently deleted/rebuilt and not publicly pullable
-ignored_containers = ["harbor.tid.es/*"]
+# iso-builder is a locally-built image (not on Docker Hub), so the pull step fails
+ignored_containers = ["harbor.tid.es/*", "iso-builder*"]
 # Specify the runtime to use for containers (default: "docker", allowed values: "docker", "podman")
 # runtime = "podman"
 
