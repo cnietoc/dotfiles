@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+source "$DOTLY_PATH/scripts/core/_main.sh"
+source "$DOTFILES_PATH/shell/functions.sh"
+
+##? Monitor Wake-on-LAN magic packets on the network
+#?? 1.0.0
+##?
+##? Usage:
+##?   wol_monitor [--iface IFACE] [--mac MAC]
+##?
+##? Options:
+##?   --iface IFACE  Network interface to listen on [default: en0]
+##?   --mac MAC      Filter for a specific target MAC address
+docs::parse "$@"
+
+cd "$DOTFILES_PATH/scripts/network/src/wol_monitor" || exit 1
+sudo env PATH="$PATH" uv run main.py \
+  ${arg_iface:+--iface "$arg_iface"} \
+  ${arg_mac:+--mac "$arg_mac"}

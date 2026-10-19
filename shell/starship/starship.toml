@@ -1,1 +1,4 @@
 "$schema" = 'https://starship.rs/config-schema.json'
+
+# Increase command timeout from default 500ms — git can be slow on large/sparse repos
+command_timeout = 2000
