@@ -79,7 +79,7 @@ preview_archive() {
 # ---------------- MAIN ----------------
 
 if is_dir "$file"; then
-	eza --tree --level=2 --icons "$file"
+	eza --tree --level=2 --icons=always "$file"
 
 elif is_image "$file"; then
 	preview_image "$file"

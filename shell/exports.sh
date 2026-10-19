@@ -29,7 +29,7 @@ fi
 
 export FZF_DEFAULT_OPTS="--color=$fzf_colors --reverse"
 export FZF_CTRL_T_OPTS="--preview 'bat --color=always --style=numbers --line-range=:100 {}'"
-export FZF_ALT_C_OPTS="--preview 'eza --tree --level=2 --icons --color=always {}'"
+export FZF_ALT_C_OPTS="--preview 'eza --tree --level=2 --icons=always --color=always {}'"
 
 export DOCKER_SOCK_FILE=/var/run/docker.sock
 
