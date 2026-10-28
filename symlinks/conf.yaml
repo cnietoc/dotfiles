@@ -23,6 +23,7 @@
     ~/.gitignore_global: git/.gitignore_global
     ~/.config/mise: langs/mise
     ~/.config/fastfetch: shell/fastfetch
+    ~/.config/atuin: shell/atuin
     ~/.config/starship.toml: shell/starship/starship.toml
     ~/.config/nvim: editors/nvim
     ~/.config/bat/config: shell/bat/config
