@@ -73,6 +73,7 @@
 ## possible values: auto, full, compact
 # style = "auto"
 
+
 ## the maximum number of lines the interface should take up
 ## set it to 0 to always go full screen
 # inline_height = 0
@@ -171,6 +172,7 @@
 ## This applies for new installs. Old installs will keep the old behaviour unless configured otherwise.
 enter_accept = true
 search_mode = "daemon-fuzzy"
+filter_mode = "directory"
 
 ## Defaults to false. If enabled, when triggered after &&, || or |, Atuin will complete commands to chain rather than replace the current line.
 # command_chaining = false
@@ -200,6 +202,7 @@ search_mode = "daemon-fuzzy"
 
 [stats]
 ## Set commands where we should consider the subcommand for statistics. Eg, kubectl get vs just kubectl
+common_subcommands = ["git", "brew", "kubectl", "docker", "npm", "ssh"]
 # common_subcommands = [
 #   "apt",
 #   "cargo",
@@ -225,7 +228,7 @@ search_mode = "daemon-fuzzy"
 # ]
 
 ## Set commands that should be totally stripped and ignored from stats
-# common_prefix = ["sudo"]
+common_prefix = ["sudo"]
 
 ## Set commands that will be completely ignored from stats
 # ignored_commands = [
@@ -333,6 +336,7 @@ autostart = true
 # height = "60%"
 
 [ui]
+columns = ["duration", "time", { type = "directory", width = 24 }, "command"]
 
 [ai]
 enabled = true
