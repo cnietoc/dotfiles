@@ -11,6 +11,7 @@
 - link:
     ~/.dotly: os/mac/.dotly
     ~/.config/ghostty: os/mac/ghostty
+    ~/.config/atuin: os/mac/atuin
     ~/.config/topgrade.toml: os/mac/topgrade/topgrade.toml
     ~/bin/bash: /opt/homebrew/bin/bash
     ~/bin/date: /opt/homebrew/bin/gdate
